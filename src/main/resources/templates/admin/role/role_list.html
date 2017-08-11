@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.css}">
+    <style type="text/css">
+        #topPlugin {
+            float: left;
+            margin-left: 10px;
+        }
+    </style>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>角色查询</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
+                <li class="active">角色查询</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">角色查询</h3>
+                        </div>
+                            <form class="form-horizontal" action="" method="post">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">角色名称：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="roleName" name="roleName" style="width: 250px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">角色状态：</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" style="width: 250px" id="enabled" name="enabled">
+                                            <option value="">请选择...</option>
+                                            <option value="1">显示</option>
+                                            <option value="0">不显示</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <button type="button" class="btn btn-success loading-state-btn" data-loading-text="查询中..." style="float: right;" id="search">查 询</button>
+                                </div>
+                            </form>
+
+                        <div class="box-body">
+                            <table id="dataTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>角色名称</th>
+                                        <th>是否可用</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--单个删除确认对话框-->
+    <div class="modal fade" id="deleteOneModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" > <!-- data-backdrop="static" 禁止点击弹框后面内容 -->
+        <form class="form-horizontal" role="form">
+            <div class="modal-dialog modal-sm " > <!-- modal-sm 小的  modal-lg 大的 -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            提示信息
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="text-align: left;">
+                        <h5>您确定要删除当前信息吗？</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <!--
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">取消
+                            </button>
+                             -->
+                        <button type="button" class="btn btn-primary" id="delSubmit">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+        </form>
+    </div>
+
+    <!-- DataTables -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+    <!-- 自定义JS-->
+    <script th:src="@{/static/system/role/role.js}"></script>
+</html>

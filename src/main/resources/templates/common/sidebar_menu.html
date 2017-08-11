@@ -1,0 +1,93 @@
+<aside class="main-sidebar" th:fragment="sidebar_menu">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <!-- 用户图像 -->
+                <img th:src="@{/static/AdminLTE-2.3.11/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <!-- 当前用户名 -->
+                <div sec:authorize="isAuthenticated()">
+                    <p sec:authentication="name"></p>
+                </div>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- 全局搜索框 -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="key" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- 侧边栏菜单列表 -->
+        <ul class="sidebar-menu">
+            <li class="header">导航</li>
+            <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-desktop"></i>
+                    <span>系统管理</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> 用户管理
+                            <span class="pull-right-container">
+		                  		<i class="fa fa-angle-left pull-right"></i>
+		                	</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a th:href="@{/user/list}"><i class="fa fa-circle-o"></i> 用户查询</a></li>
+                            <li><a th:href="@{/user/add}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o"></i> 角色管理
+                            <span class="pull-right-container">
+		                  		<i class="fa fa-angle-left pull-right"></i>
+		                	</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a th:href="@{/role/list}"><i class="fa fa-circle-o"></i> 角色查询</a></li>
+                            <li><a th:href="@{/role/add}"><i class="fa fa-circle-o"></i> 角色添加</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o"></i> 菜单管理
+                            <span class="pull-right-container">
+		                  		<i class="fa fa-angle-left pull-right"></i>
+		                	</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a th:href="@{/menu/list}"><i class="fa fa-circle-o"></i> 菜单查询</a></li>
+                            <li><a th:href="@{/menu/add}"><i class="fa fa-circle-o"></i> 菜单添加</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 日志管理</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <span>数据分析</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 1</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 2</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 3</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 4</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-book"></i> <span>系统介绍</span></a></li>
+            <li class="header">链接</li>
+            <li><a href="https://github.com/WhiteCode2016"><i class="fa fa-link text-red"></i> <span>Github.WhiteCode2016</span></a></li>
+        </ul>
+    </section>
+</aside>

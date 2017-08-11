@@ -1,0 +1,17 @@
+<head th:fragment="head(title,links)">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <meta content="权限系统，后台管理系统" name="description"/>
+    <meta content="思雨制作" name="author"/>
+    <title th:replace="${title}">默认</title>
+    <!-- 常用CSS -->
+    <link rel="shortcut icon" href="" showDefaultImage="true" icon="true" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/dist/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css}">
+    <!-- 其他CSS -->
+    <th:block th:replace="${links}" />
+</head>

@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout_v1(title, links, content, scripts)">
+    <!-- head部分 -->
+    <head th:replace="common/head :: head(${title}, ${links})"></head>
+    <!-- body部分 -->
+    <div th:replace="common/body :: body(${content}, ${scripts})"></div>
+</html>

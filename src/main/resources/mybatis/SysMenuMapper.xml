@@ -91,7 +91,7 @@
     <!-- 通过Id获取菜单 -->
     <select id="get" resultType="com.white.entity.system.SysMenu">
         <include refid="selectColumns"/>
-        WHERE a.id = #{id}
+        WHERE sm.id = #{id}
     </select>
 
     <!-- 编辑菜单 -->

@@ -28,13 +28,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/user/add").setViewName("admin/user/user_add");
         registry.addViewController("/user/list").setViewName("admin/user/user_list");
         // 菜单管理
+        registry.addViewController("/menu/add").setViewName("admin/menu/menu_add");
         registry.addViewController("/menu/list").setViewName("admin/menu/menu_list");
         // 角色管理
+        registry.addViewController("/role/add").setViewName("admin/role/role_add");
         registry.addViewController("/role/list").setViewName("admin/role/role_list");
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/");
     }
 }

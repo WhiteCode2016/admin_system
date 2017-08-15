@@ -78,6 +78,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public void addUser(SysUser sysUser) {
+        sysUser.preInsert();
         sysUserMapper.insert(sysUser);
     }
 
@@ -142,6 +143,26 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public List<SysRole> getRoleListByCondition(SysRole sysRole) {
         return sysRoleMapper.findList(sysRole);
+    }
+
+    @Override
+    public SysRole getRole(String id) {
+        return sysRoleMapper.get(id);
+    }
+
+    @Override
+    public void addRole(SysRole sysRole) {
+        sysRoleMapper.insert(sysRole);
+    }
+
+    @Override
+    public void updateRole(SysRole sysRole) {
+        sysRoleMapper.update(sysRole);
+    }
+
+    @Override
+    public void deleteRole(String id) {
+        sysRoleMapper.deleteById(id);
     }
 
 }

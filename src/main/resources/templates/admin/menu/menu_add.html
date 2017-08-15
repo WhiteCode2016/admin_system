@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}">
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>用户添加</h1>
+            <h1>菜单添加</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
-                <li class="active">用户添加</li>
+                <li class="active">菜单添加</li>
             </ol>
         </section>
         <section class="content">
@@ -16,31 +15,41 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">用户添加</h3>
+                            <h3 class="box-title">菜单添加</h3>
                         </div>
-                        <form role="form" th:action="@{/api/user/}" method="post" id="addForm">
+                        <form role="form" th:action="@{/api/menu/}" method="post" id="addForm">
                             <div class="box-body">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="username">用户名</label>
-                                        <input type="text" class="form-control" id="username" name="username"/>
+                                        <label for="id">菜单编号</label>
+                                        <input type="text" class="form-control" id="id" name="id"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="userNameCn">中文名</label>
-                                        <input type="text" class="form-control" id="userNameCn" name="userNameCn"/>
+                                        <label for="menuName">菜单名</label>
+                                        <input type="text" class="form-control" id="menuName" name="menuName"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="userNameEn">英文名</label>
-                                        <input type="text" class="form-control" id="userNameEn" name="userNameEn"/>
+                                        <label for="parentId">父级菜单</label>
+                                        <input type="text" class="form-control" id="parentId" name="parentId"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="password">密码</label>
-                                        <input type="password" class="form-control" id="password" name="password" value="123"/>
+                                        <label for="href">链接</label>
+                                        <input type="text" class="form-control" id="href" name="href"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>用户是否可用</label>
+                                        <label for="icon">图标</label>
+                                        <input type="text" class="form-control" id="icon" name="icon"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sort">排序</label>
+                                        <input type="text" class="form-control" id="sort" name="sort"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>菜单是否可用</label>
                                         <select class="form-control" style="width: 100%;" name="enabled" id="enabled">
                                             <option value="1" selected="selected">是</option>
                                             <option value="0">否</option>
@@ -85,10 +94,7 @@
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/bootstrap-datepicker.js}"></script>
     <!-- bootstrap datepicker zh-CN-->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jsTree/jstree.min.js}"></script>
-    <!-- jquery validation -->
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/jquery.validate.min.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/additional-methods.min.js}"></script>
+
     <script type="text/javascript">
         $(function () {
             // 初始化datepicker
@@ -105,7 +111,7 @@
             // 添加操作
             $(document).delegate("#btn_add", 'click',function () {
                 $.ajax({
-                    url: "/api/user/",
+                    url: "/api/menu/",
                     async:true,
                     type:"POST",
                     dataType:"json",
@@ -113,45 +119,16 @@
                     data:$("#addForm").serialize(),
                     success: function(data){
                         if (data.code == 0) {
-//                             layer.msg("添加成功", {icon: 1, time: 1500});
                             alert("添加成功");
                         }else {
-//                             layer.msg("操作失败", {icon: 1, time: 1500});
                             alert("添加失败");
                         }
                     },
                     error:function(data){
-//                         layer.msg("请求异常", {icon: 1, time: 1500});
                         alert("请求异常");
                     }
                 });
             });
-
-            // 表单验证
-           /* $("#addForm").validate({
-                debug: true,
-                rules: {
-                    id: "required",
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    id: "请输入编号",
-                    username: {
-                        required: "请输入用户名称"
-                    },
-                    password: {
-                        required: "请输入密码"
-                    }
-                },
-                submitHandler:function (form) {
-                    form.submit();
-                }
-            });*/
         });
     </script>
 </html>

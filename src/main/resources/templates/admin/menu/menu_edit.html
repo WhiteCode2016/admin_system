@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}">
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>用户添加</h1>
+            <h1>菜单修改</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
-                <li class="active">用户添加</li>
+                <li class="active">菜单修改</li>
             </ol>
         </section>
         <section class="content">
@@ -16,33 +15,43 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">用户添加</h3>
+                            <h3 class="box-title">菜单修改</h3>
                         </div>
-                        <form role="form" th:action="@{/api/user/}" method="post" id="addForm">
+                        <form role="form" th:action="@{/api/menu/}" method="post" id="editForm">
                             <div class="box-body">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="username">用户名</label>
-                                        <input type="text" class="form-control" id="username" name="username"/>
+                                        <label for="id">菜单编号</label>
+                                        <input type="text" class="form-control" id="id" name="id" th:value="${sysMenu.id}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="userNameCn">中文名</label>
-                                        <input type="text" class="form-control" id="userNameCn" name="userNameCn"/>
+                                        <label for="menuName">菜单名</label>
+                                        <input type="text" class="form-control" id="menuName" name="menuName" th:value="${sysMenu.menuName}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="userNameEn">英文名</label>
-                                        <input type="text" class="form-control" id="userNameEn" name="userNameEn"/>
+                                        <label for="parentId">父级菜单</label>
+                                        <input type="text" class="form-control" id="parentId" name="parentId" th:value="${sysMenu.parentId}"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="password">密码</label>
-                                        <input type="password" class="form-control" id="password" name="password" value="123"/>
+                                        <label for="href">链接</label>
+                                        <input type="text" class="form-control" id="href" name="href" th:value="${sysMenu.href}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>用户是否可用</label>
-                                        <select class="form-control" style="width: 100%;" name="enabled" id="enabled">
-                                            <option value="1" selected="selected">是</option>
+                                        <label for="icon">图标</label>
+                                        <input type="text" class="form-control" id="icon" name="icon" th:value="${sysMenu.icon}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sort">排序</label>
+                                        <input type="text" class="form-control" id="sort" name="sort" th:value="${sysMenu.sort}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>菜单是否可用</label>
+                                        <select class="form-control" style="width: 100%;" name="show" id="show" th:value="${sysMenu.show}">
+                                            <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
                                     </div>
@@ -52,7 +61,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" disabled="disabled" class="form-control pull-right datepicker" id="createDate" name="createDate">
+                                            <input type="text" disabled="disabled" class="form-control pull-right" id="createDate" name="createDate" th:value="${sysMenu.createDate}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -61,19 +70,19 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" disabled="disabled" class="form-control pull-right datepicker" id="updateDate" name="updateDate">
+                                            <input type="text" class="form-control pull-right" id="updateDate" name="updateDate" th:value="${sysMenu.updateDate}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="remarks">备注</label>
-                                        <textarea rows="5" cols="10" class="form-control" id="remarks" name="remarks"></textarea>
+                                        <textarea rows="5" cols="10" class="form-control" id="remarks" name="remarks" th:text="${sysMenu.remarks}"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <button type="button" class="btn btn-primary pull-right" id="btn_add">保 存</button>
+                                <button type="button" class="btn btn-primary pull-right" id="btn_edit">保 存</button>
                             </div>
                         </form>
                     </div>
@@ -85,10 +94,6 @@
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/bootstrap-datepicker.js}"></script>
     <!-- bootstrap datepicker zh-CN-->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jsTree/jstree.min.js}"></script>
-    <!-- jquery validation -->
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/jquery.validate.min.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/additional-methods.min.js}"></script>
     <script type="text/javascript">
         $(function () {
             // 初始化datepicker
@@ -99,59 +104,29 @@
                 todayHighlight:true,
                 autoclose: true
             });
-            // 设置当前日期为datepicker的默认日期
-            $(".datepicker").datepicker("setDate", new Date());
 
-            // 添加操作
-            $(document).delegate("#btn_add", 'click',function () {
+            // 编辑操作
+            $(document).delegate("#btn_edit", 'click',function () {
+                var id = $("#id").val();
                 $.ajax({
-                    url: "/api/user/",
+                    url: "/api/menu/" + id,
                     async:true,
                     type:"POST",
                     dataType:"json",
                     cache:false,    //不允许缓存
-                    data:$("#addForm").serialize(),
+                    data:$("#editForm").serialize(),
                     success: function(data){
                         if (data.code == 0) {
-//                             layer.msg("添加成功", {icon: 1, time: 1500});
                             alert("添加成功");
                         }else {
-//                             layer.msg("操作失败", {icon: 1, time: 1500});
                             alert("添加失败");
                         }
                     },
                     error:function(data){
-//                         layer.msg("请求异常", {icon: 1, time: 1500});
                         alert("请求异常");
                     }
                 });
             });
-
-            // 表单验证
-           /* $("#addForm").validate({
-                debug: true,
-                rules: {
-                    id: "required",
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    id: "请输入编号",
-                    username: {
-                        required: "请输入用户名称"
-                    },
-                    password: {
-                        required: "请输入密码"
-                    }
-                },
-                submitHandler:function (form) {
-                    form.submit();
-                }
-            });*/
         });
     </script>
 </html>

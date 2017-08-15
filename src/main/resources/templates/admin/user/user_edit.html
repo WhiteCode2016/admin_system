@@ -17,62 +17,63 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">用户修改</h3>
                         </div>
-                        <form role="form" action="" method="post" enctype="multipart/form-data">
+                        <form role="form" th:action="@{/api/user/}" method="put" id="editForm">
                             <div class="box-body">
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <input type="hidden" id="id" name="id" th:value="${sysUser.id}">
                                         <label for="username">用户名</label>
-                                        <input type="text" class="form-control" id="username" name="username"/>
+                                        <input type="text" class="form-control" id="username" name="username" th:value="${sysUser.username}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="username">中文名</label>
-                                        <input type="text" class="form-control" id="userNameCn" name="userNameCn"/>
+                                        <label for="userNameCn">中文名</label>
+                                        <input type="text" class="form-control" id="userNameCn" name="userNameCn" th:value="${sysUser.userNameCn}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="username">英文名</label>
-                                        <input type="text" class="form-control" id="userNameEn" name="userNameEn"/>
+                                        <label for="userNameEn">英文名</label>
+                                        <input type="text" class="form-control" id="userNameEn" name="userNameEn" th:value="${sysUser.userNameEn}"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="password">密码</label>
-                                        <input type="password" class="form-control" id="password" name="password" value="123"/>
+                                        <input type="password" class="form-control" id="password" name="password" th:value="${sysUser.password}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>用户是否可用</label>
-                                        <select class="form-control" style="width: 100%;">
-                                            <option value="1" selected="selected">是</option>
+                                        <label for="enabled">用户是否可用</label>
+                                        <select class="form-control" style="width: 100%;" id="enabled" name="enabled" th:value="${sysUser.enabled}">
+                                            <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>创建日期:</label>
+                                        <label for="createDate">创建日期:</label>
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right datepicker" id="createDate" name="createDate">
+                                            <input type="text" disabled="disabled" class="form-control pull-right datepicker" id="createDate" name="createDate" th:value="${sysUser.createDate}">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>修改日期:</label>
+                                        <label for="updateDate">修改日期:</label>
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right datepicker" id="updateDate" name="updateDate">
+                                            <input type="text" class="form-control pull-right datepicker" id="updateDate" name="updateDate" th:value="${sysUser.updateDate}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="remarks">备注</label>
-                                        <textarea rows="5" cols="10" class="form-control" id="remarks" name="remarks"></textarea>
+                                        <textarea rows="5" cols="10" class="form-control" id="remarks" name="remarks" placeholder="添加备注..." th:text="${sysUser.remarks}"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary pull-right">提 交</button>
+                                <button type="button" class="btn btn-primary pull-right" id="btn_edit">保 存</button>
                             </div>
                         </form>
                     </div>
@@ -93,6 +94,29 @@
                 language: 'zh-CN',
                 todayHighlight:true,
                 autoclose: true
+            });
+
+            // 编辑操作
+            $(document).delegate("#btn_edit", 'click',function () {
+                var id = $("#id").val();
+                $.ajax({
+                    url: "/api/user/"+id,
+                    async:true,
+                    type:"POST",
+                    dataType:"json",
+                    cache:false,    //不允许缓存
+                    data:$("#editForm").serialize(),
+                    success: function(data){
+                        if (data.code == 0) {
+                            alert("添加成功");
+                        }else {
+                            alert("添加失败");
+                        }
+                    },
+                    error:function(data){
+                        alert("请求异常");
+                    }
+                });
             });
         });
     </script>

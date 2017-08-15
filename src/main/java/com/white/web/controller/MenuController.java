@@ -3,6 +3,7 @@ package com.white.web.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.white.entity.system.SysMenu;
+import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
 import com.white.util.BootStrapPage;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,6 +38,18 @@ public class MenuController {
         systemService.addMenu(sysMenu);
         return ResultUtil.success();
     }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ModelAndView getUser(@PathVariable String id) {
+        // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
+        // url中的id可通过@PathVariable绑定到函数的参数中
+        ModelAndView modelAndView = new ModelAndView();
+        SysMenu sysMenu = systemService.getMenu(id);
+        modelAndView.addObject("sysMenu",sysMenu);
+        modelAndView.setViewName("admin/menu/menu_edit");
+        return modelAndView;
+    }
+
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public Result<SysMenu> updateMenu(@ModelAttribute SysMenu sysMenu) {
@@ -69,4 +83,5 @@ public class MenuController {
         //返回数据到页面
         return dataTable;
     }
+
 }

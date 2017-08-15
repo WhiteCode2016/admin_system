@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // 初始化dataTables，并加载数据
     var table = $("#dataTable").DataTable({
         "paging": true,         //开启表格分页
         "lengthChange": false, //是否允许用户改变表格每页显示的记录数
@@ -68,14 +69,13 @@ $(document).ready(function () {
         var id=$(this).val();
         $('#deleteOneModal').modal('hide');
         $.ajax({
-            url: "/api/user/"+id,
+            url: "/api/role/" + id,
             async:true,
             type:"DELETE",
             dataType:"json",
             cache:false,    //不允许缓存
             success: function(data){
-                var obj = eval(data);
-                if(obj.code==1) {
+                if(data.code == 0) {
                     window.location.reload();
                 } else {
                     alert("删除失败");
@@ -86,18 +86,23 @@ $(document).ready(function () {
             }
         });
     });
-
-    $(document).delegate('#reset','click',function() {
-        $("#state").val("");
-        $("#deptname").val("");
-        $("#startTime").val("");
-        $("#endTime").val("");
+    // 打开添加页面
+    $(document).delegate('#addOne','click',function() {
+        // $('#addOneModal').modal('show');
+        window.open("/role/add","_self");
     });
+    // 打开编辑页面
+    $(document).delegate('#editOne','click',function() {
+        var id=$(this).data("id");
+        window.open("/api/role/" + id,"_self");
+    });
+    // 重置查询条件
+    $(document).delegate('#reset','click',function() {
+        $("#roleName").val("");
+        $("#enabled").val("");
+    });
+    // 查询操作
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
-
-
-
-
 });

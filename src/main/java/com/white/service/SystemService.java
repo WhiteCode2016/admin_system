@@ -16,53 +16,47 @@ public interface SystemService {
 
     // 根据登录名获取用户
     SysUser getUserByUserName(String username);
-
     // 获取用户列表
     List<SysUser> getAllUsers();
-
     // 通过Id获取用户
     SysUser getUser(String id);
-
     // 按条件查询用户信息并分页
     List<SysUser> getUserListByCondition(SysUser sysUser);
-
     // 添加用户
     void addUser(SysUser sysUser);
-
     // 编辑用户
     void updateUser(SysUser sysUser);
-
     // 删除用户
     void deleteUser(String id);
 
     // 获取所有菜单
     List<SysMenu> getAllMenus();
-
     // 按条件查询用户信息并分页
     List<SysMenu> getMenuListByCondition(SysMenu sysMenu);
-
     // 获取所有的父级菜单
     List<SysMenu> getParentMenu();
-
     // 通过parentId获取其子级菜单
     List<SysMenu> getChildMenuByParentId(String parentId);
-
     // 批量删除菜单
     void deleteMenu(String[] id);
-
     // 单个删除菜单
     void deleteMenu(String id);
-
     // 添加菜单
     void addMenu(SysMenu sysMenu);
-
     // 编辑菜单
     void update(SysMenu sysMenu);
-
     // 通过Id获取菜单
     SysMenu getMenu(String id);
 
     // 按条件查询角色信息并分页
     List<SysRole> getRoleListByCondition(SysRole sysRole);
+    //通过Id获取角色
+    SysRole getRole(String id);
+    // 添加角色
+    void addRole(SysRole sysRole);
+    // 编辑角色
+    void updateRole(SysRole sysRole);
+    // 删除角色
+    void deleteRole(String id);
 
 }

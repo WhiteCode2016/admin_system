@@ -5,10 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
 import com.white.util.DataTablePage;
+import com.white.util.ResultUtil;
+import com.white.web.exception.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,53 +37,51 @@ public class UserController {
     }
 
     @RequestMapping(value="/", method=RequestMethod.POST)
-    public String postUser(@ModelAttribute SysUser sysUser) {
+    public Result<Object> postUser(@ModelAttribute SysUser sysUser) {
         // 处理"/users/"的POST请求，用来创建User
         // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
         systemService.addUser(sysUser);
-        return "success";
+        return ResultUtil.success();
+//        return "success";
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+  /*  @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public SysUser getUser(@PathVariable String id) {
         // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
         // url中的id可通过@PathVariable绑定到函数的参数中
         return systemService.getUser(id);
+    }*/
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ModelAndView getUser(@PathVariable String id) {
+      // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
+      // url中的id可通过@PathVariable绑定到函数的参数中
+        ModelAndView modelAndView = new ModelAndView();
+        SysUser sysUser = systemService.getUser(id);
+        modelAndView.addObject("sysUser",sysUser);
+        modelAndView.setViewName("admin/user/user_edit");
+        return modelAndView;
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+   /* @RequestMapping(value="/{id}", method=RequestMethod.PUT)
     public String putUser(@PathVariable String id, @ModelAttribute SysUser sysUser) {
         // 处理"/users/{id}"的PUT请求，用来更新User信息
+        logger.info(sysUser.toString());
         systemService.updateUser(sysUser);
         return "success";
-    }
+    }*/
+  @RequestMapping(value="/{id}", method=RequestMethod.POST)
+  public Result<Object> putUser1(@PathVariable String id, @ModelAttribute SysUser sysUser) {
+      // 处理"/users/{id}"的PUT请求，用来更新User信息
+      logger.info(sysUser.toString());
+      systemService.updateUser(sysUser);
+      return ResultUtil.success();
+  }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public String deleteUser(@PathVariable String id) {
         // 处理"/users/{id}"的DELETE请求，用来删除User
         systemService.deleteUser(id);
         return "success";
-    }
-
-    @RequestMapping(value="/list", method= RequestMethod.POST)
-    public DataTablePage<SysUser> getList(HttpServletRequest request) {
-        //使用DataTables的属性接收分页数据
-        DataTablePage<SysUser> dataTable = new DataTablePage<SysUser>(request);
-        //开始分页：PageHelper会处理接下来的第一个查询
-        PageHelper.startPage(dataTable.getPage_num(), dataTable.getPage_size());
-        //还是使用List，方便后期用到
-        List<SysUser> list = systemService.getAllUsers();
-        //用PageInfo对结果进行包装
-        PageInfo<SysUser> pageInfo = new PageInfo<SysUser>(list);
-
-        //封装数据给DataTables
-        dataTable.setDraw(dataTable.getDraw());
-        dataTable.setData(pageInfo.getList());
-        dataTable.setRecordsTotal((int) pageInfo.getTotal());
-        dataTable.setRecordsFiltered(dataTable.getRecordsTotal());
-
-        //返回数据到页面
-        return dataTable;
     }
 
     @RequestMapping(value="/listByPage", method= RequestMethod.POST)

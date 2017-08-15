@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // 初始化dataTables，并加载数据
     var table = $("#dataTable").DataTable({
         "paging": true,         //开启表格分页
         "lengthChange": false, //是否允许用户改变表格每页显示的记录数
@@ -71,7 +72,6 @@ $(document).ready(function () {
         $("#delSubmit").val(id);
         $("#deleteOneModal").modal('show');
     });
-
     //点击确认删除按钮
     $(document).delegate('#delSubmit','click',function(){
         var id=$(this).val();
@@ -95,18 +95,23 @@ $(document).ready(function () {
             }
         });
     });
-
-    $(document).delegate('#reset','click',function() {
-        $("#state").val("");
-        $("#deptname").val("");
-        $("#startTime").val("");
-        $("#endTime").val("");
+    // 打开添加页面
+    $(document).delegate('#addOne','click',function() {
+        // $('#addOneModal').modal('show');
+        window.open("/menu/add","_self");
     });
+    // 打开编辑页面
+    $(document).delegate('#editOne','click',function() {
+        var id=$(this).data("id");
+        window.open("/api/menu/" + id,"_self");
+    });
+    // 重置查询条件
+    $(document).delegate('#reset','click',function() {
+        $("#menuName").val("");
+        $("#enabled").val("");
+    });
+    // 查询操作
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
-
-
-
-
 });

@@ -1,6 +1,5 @@
 package com.white.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,15 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+//    @Autowired
+//    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // 自定义登录
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/testExcetion").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/menu/**").permitAll()
                 .antMatchers("/role/**").permitAll()
@@ -70,10 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 设置忽略的静态资源
         webSecurity
                 .ignoring()
-                .antMatchers("/static/**");
-//                .antMatchers("/400")
-//                .antMatchers("/404")
-//                .antMatchers("/500");
+                .antMatchers("/static/**")
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources", "/swagger-ui.html", "/webjars/**");
     }
 
     @Bean

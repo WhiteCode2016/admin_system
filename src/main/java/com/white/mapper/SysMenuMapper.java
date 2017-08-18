@@ -16,16 +16,10 @@ public interface SysMenuMapper extends CrudDao<SysMenu>{
     // 通过userId获取用户的菜单列表
     List<SysMenu> getMenusByUserId(String userId);
 
+    // 通过roleId获取用户的菜单列表
+    List<SysMenu> getMenusByRoleId(String roleId);
+
     // 获取所有的菜单列表
     List<SysMenu> getAllMenus();
-
-    // 获取所有的父级菜单
-    List<SysMenu> getParentMenu();
-
-    // 通过parentId获取其子级菜单
-    List<SysMenu> getChildMenuByParentId(String parentId);
-
-    // 批量删除菜单
-    void deleteMenu(String[] id);
 
 }

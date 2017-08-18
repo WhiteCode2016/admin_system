@@ -40,8 +40,11 @@ $(document).ready(function () {
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                    return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
-                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';
+                   /* return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
+                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';*/
+                    return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="editMneuTree"  data-id='+ row.id +'><i class="fa fa-th-list"></i></button> ';
                 }
             }
         ],
@@ -51,8 +54,15 @@ $(document).ready(function () {
     //表格加载渲染完毕，加载功能按钮
     function initComplete(){
         //功能按钮
-        var topPlugin = '<button class="btn btn-primary btn-sm" id="addOne" >新 增</button> ' +
-            '<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>' ;
+      /*  var topPlugin = '<button class="btn btn-primary btn-sm" id="addOne" >新 增</button> ' +
+            '<button class="btn btn-primary btn-sm" id="reset">重置搜索条件</button>' ;*/
+      var topPlugin = '<div class="btn-group"> ' +
+          '<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button> ' +
+          '<ul class="dropdown-menu " role="menu"> ' +
+          '<li><a href="#" id="excel"> <img src="icons/xls.png" width="24px"> XLS</a></li> ' +
+        '<li><a href="#"> <img src="icons/pdf.png" width="24px"> PDF</a></li> ' +
+        '</ul> ' +
+        '</div>';
         //在表格上方topPlugin DIV中追加HTML
         $("#topPlugin").append(topPlugin);
     }
@@ -88,13 +98,17 @@ $(document).ready(function () {
     });
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
-        // $('#addOneModal').modal('show');
         window.open("/role/add","_self");
     });
     // 打开编辑页面
     $(document).delegate('#editOne','click',function() {
         var id=$(this).data("id");
         window.open("/api/role/" + id,"_self");
+    });
+    // 打开编辑菜单树页面
+    $(document).delegate('#editMneuTree','click',function() {
+        var id=$(this).data("id");
+        window.open("/api/menu/getMenuTree/" + id,"_self");
     });
     // 重置查询条件
     $(document).delegate('#reset','click',function() {
@@ -105,4 +119,15 @@ $(document).ready(function () {
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
+
+    $(document).delegate('#excel','click',function() {
+        $('#dataTable').tableExport({
+            fileName: '角色信息表',
+            ignoreColumn:[4],
+            type:'excel',
+            escape:'false'
+        });
+    });
+
+
 });

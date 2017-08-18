@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
+    <!-- JsTree -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>菜单分配</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
+                <li class="active">菜单分配</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">菜单分配</h3>
+                        </div>
+                        <div class="box-body">
+                            <input type="hidden" class="form-control" id="id" name="id" th:value="${id}"/>
+                            <div id="jsTree"></div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-primary pull-right" id="btn_add">保 存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- JsTree -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jsTree/jstree.min.js}"></script>
+    <!-- 自定义JS -->
+    <script th:src="@{/static/system/menu/menu_tree.js}"></script>
+</html>

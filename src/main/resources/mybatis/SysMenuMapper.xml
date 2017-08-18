@@ -27,6 +27,13 @@
         WHERE su.id = #{userId}
     </select>
 
+    <!-- 通过userId获取用户的菜单列表 -->
+    <select id="getMenusByRoleId" resultType="com.white.entity.system.SysMenu">
+        <include refid="selectColumns"/>
+        JOIN sys_role_menu srm ON srm.menu_id = sm.id
+        WHERE srm.role_id = #{roleId}
+    </select>
+
     <!-- 获取所有的菜单列表 -->
     <select id="getAllMenus" resultType="com.white.entity.system.SysMenu">
         <include refid="selectColumns"/> WHERE sm.del_flag = '0'
@@ -42,26 +49,6 @@
         <if test="show != null">
             AND sm.show = #{show}
         </if>
-    </select>
-
-    <!-- 获取所有的父级菜单 -->
-    <select id="getParentMenu" resultType="com.white.entity.system.SysMenu">
-        <include refid="selectColumns"/>
-        WHERE sm.parent_id = ''
-    </select>
-
-    <!-- 通过parentId获取其子级菜单 -->
-    <select id="getChildMenuByParentId" resultType="com.white.entity.system.SysMenu">
-        <include refid="selectColumns"/>
-        WHERE sm.parent_id = #{parentId}
-    </select>
-
-    <!-- 批量删除菜单 -->
-    <select id="deleteMenu" parameterType="java.lang.String" resultType="Integer">
-        DELETE FROM sys_menu WHERE id IN
-        <foreach collection="array" item="id" index="index" open="(" separator="," close=")">
-            #{id}
-        </foreach>
     </select>
 
     <!-- 添加一个菜单 -->
@@ -115,5 +102,14 @@
         SET del_flag = '1'
         WHERE id = #{id}
     </update>
+
+   <!-- <select id="getJSTreeMenu" resultType="com.white.util.JsTreeMenu">
+        SELECT
+            id "id",
+            parent_id "parent",
+            menuName "text",
+            icon "icon"
+        FROM sys_menu
+    </select>-->
 
 </mapper>

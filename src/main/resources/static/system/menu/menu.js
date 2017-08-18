@@ -9,7 +9,7 @@ $(document).ready(function () {
         "autoWidth": false,    //开启自适应宽度
         "processing": true,
         "serverSide": true,
-        "dom": "<l<\'#topPlugin\'>f>rt<ip><'clear'>",
+        // "dom": "<l<\'#topPlugin\'>f>rt<ip><'clear'>",
         "language": {
             "url": "/static/AdminLTE-2.3.11/plugins/datatables/i18n/Chinese.json"
         },
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 }
             }
         ],
-        initComplete:initComplete
+        // initComplete:initComplete
     });
 
     //表格加载渲染完毕，加载功能按钮

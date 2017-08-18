@@ -56,11 +56,6 @@ public class SpringbootApplicationTests {
 	}
 
 	@Test
-	public void deleteMenu(){
-		sysMenuMapper.deleteMenu(new String[]{"50223b0d0c014e848296f7580df517e7"});
-	}
-
-	@Test
 	public void findList() {
 		SysUser sysUser = new SysUser();
 //		sysUser.setUsername("admin");
@@ -73,4 +68,5 @@ public class SpringbootApplicationTests {
 		SysMenu sysMenu = new SysMenu();
 		System.out.println(sysMenuMapper.findList(sysMenu));
 	}
+
 }

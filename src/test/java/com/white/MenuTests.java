@@ -57,16 +57,6 @@ public class MenuTests {
 	}
 
 	@Test
-	public void getParentMenu() {
-		System.out.println(systemService.getParentMenu());
-	}
-
-	@Test
-	public void getChildMenu() {
-		System.out.println(systemService.getChildMenuByParentId("2"));
-	}
-
-	@Test
 	public void deleteMenu() {
 		systemService.deleteMenu("923");
 	}
@@ -79,4 +69,5 @@ public class MenuTests {
 		sysMenu.setSort(3);
 		systemService.addMenu(sysMenu);
 	}
+
 }

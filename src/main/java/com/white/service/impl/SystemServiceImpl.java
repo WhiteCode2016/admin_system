@@ -13,7 +13,6 @@ import com.white.web.exception.DefaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +92,16 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
+    public List<SysMenu> getMenusByUserId(String userId) {
+        return sysMenuMapper.getMenusByUserId(userId);
+    }
+
+    @Override
+    public List<SysMenu> getMenusByRoleId(String roleId) {
+        return sysMenuMapper.getMenusByRoleId(roleId);
+    }
+
+    @Override
     public List<SysMenu> getAllMenus() {
         return sysMenuMapper.getAllMenus();
     }
@@ -100,21 +109,6 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public List<SysMenu> getMenuListByCondition(SysMenu sysMenu) {
         return sysMenuMapper.findList(sysMenu);
-    }
-
-    @Override
-    public  List<SysMenu> getParentMenu() {
-        return sysMenuMapper.getParentMenu();
-    }
-
-    @Override
-    public List<SysMenu> getChildMenuByParentId(String parentId) {
-        return sysMenuMapper.getChildMenuByParentId(parentId);
-    }
-
-    @Override
-    public void deleteMenu(String[] id) {
-        sysMenuMapper.deleteMenu(id);
     }
 
     @Override

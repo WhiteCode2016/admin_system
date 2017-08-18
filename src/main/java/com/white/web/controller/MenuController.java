@@ -3,26 +3,16 @@ package com.white.web.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.white.entity.system.SysMenu;
-import com.white.entity.system.SysRole;
-import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
-import com.white.util.BootStrapPage;
 import com.white.util.DataTablePage;
 import com.white.util.ResultUtil;
 import com.white.web.exception.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,8 +31,6 @@ public class MenuController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ModelAndView getUser(@PathVariable String id) {
-        // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
-        // url中的id可通过@PathVariable绑定到函数的参数中
         ModelAndView modelAndView = new ModelAndView();
         SysMenu sysMenu = systemService.getMenu(id);
         modelAndView.addObject("sysMenu",sysMenu);
@@ -84,4 +72,21 @@ public class MenuController {
         return dataTable;
     }
 
+    @RequestMapping(value="/getAllMenus", method = RequestMethod.POST)
+    public List<SysMenu> getAllMenus() {
+        return systemService.getAllMenus();
+    }
+
+    @RequestMapping(value="/getMenusByRoleId/{id}", method = RequestMethod.GET)
+    public List<SysMenu> getMenusByRoleId(@PathVariable String id) {
+        return systemService.getMenusByRoleId(id);
+    }
+
+    @RequestMapping(value="/getMenuTree/{id}", method=RequestMethod.GET)
+    public ModelAndView getMenuTree(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("id",id);
+        modelAndView.setViewName("admin/menu/menu_tree");
+        return modelAndView;
+    }
 }

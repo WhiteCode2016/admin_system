@@ -6,7 +6,6 @@ import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
-
 import java.util.List;
 
 /**
@@ -29,16 +28,14 @@ public interface SystemService {
     // 删除用户
     void deleteUser(String id);
 
+    // 通过userId获取用户的菜单列表
+    List<SysMenu> getMenusByUserId(String userId);
+    // 通过roleId获取用户的菜单列表
+    List<SysMenu> getMenusByRoleId(String roleId);
     // 获取所有菜单
     List<SysMenu> getAllMenus();
     // 按条件查询用户信息并分页
     List<SysMenu> getMenuListByCondition(SysMenu sysMenu);
-    // 获取所有的父级菜单
-    List<SysMenu> getParentMenu();
-    // 通过parentId获取其子级菜单
-    List<SysMenu> getChildMenuByParentId(String parentId);
-    // 批量删除菜单
-    void deleteMenu(String[] id);
     // 单个删除菜单
     void deleteMenu(String id);
     // 添加菜单

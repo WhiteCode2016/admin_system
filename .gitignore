@@ -17,8 +17,8 @@ target/
 
 ### NetBeans ###
 nbproject/private/
-build/
+!build/
 nbbuild/
-dist/
+!dist/
 nbdist/
 .nb-gradle/

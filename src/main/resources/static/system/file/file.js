@@ -9,64 +9,32 @@ $(document).ready(function () {
         "autoWidth": false,    //开启自适应宽度
         "processing": true,
         "serverSide": true,
-        // "dom": "<l<\'#topPlugin\'>f>rt<ip><'clear'>",
         "language": {
             "url": "/static/AdminLTE-2.3.11/plugins/datatables/i18n/Chinese.json"
         },
         "ajax": {
-            // "url": "/static/objects.txt",
-            "url": "/api/menu/listByPage",
+            "url": "/api/file/listByPage",
             "type": "POST",
             "data": function (d) {
-                d.show=$("#show").val();
-                d.menuName=$("#menuName").val().trim();
+                d.suffix=$("#suffix").val().trim();
             }
         },
         "columns": [
             { "data": "id" },
-            { "data": "parentId" },
-            { "data": "menuName" },
-            { "data": "href" },
-            {
-                "data": "icon"/*,
-                "render" : function(data, type, row, meta) {
-                    return data='<i class='+data+'></i>';
-                }*/
-            },
-            { "data": "sort" },
-            {
-                "data": "show" ,
-                "render" : function(data, type, row, meta) {
-                    if(data == 1){
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+">显示</a>";
-                    }else{
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+"><font color='red'>不显示</font></a>";
-                    }
-                    return	 data;
-                }
-            },
-            { "data": "remarks" },
+            { "data": "originalFileName" },
+            { "data": "suffix" },
+            { "data": "size" },
+            { "data": "contentType"},
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                   /* return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
-                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';*/
                     return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ';
+                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="detailOne" data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ';
                 }
             }
         ],
-        // initComplete:initComplete
     });
-
-    //表格加载渲染完毕，加载功能按钮
-    function initComplete(){
-        //功能按钮
-        var topPlugin = '<button class="btn btn-primary btn-sm" id="addOne" >新 增</button> ' +
-            '<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>' ;
-        //在表格上方topPlugin DIV中追加HTML
-        $("#topPlugin").append(topPlugin);
-    }
 
     //单行删除按钮点击事件响应
     $(document).delegate('#deleteOne','click',function() {
@@ -79,7 +47,7 @@ $(document).ready(function () {
         var id=$(this).val();
         $('#deleteOneModal').modal('hide');
         $.ajax({
-            url: "/api/user/"+id,
+            url: "/api/file/"+id,
             async:true,
             type:"DELETE",
             dataType:"json",
@@ -97,23 +65,38 @@ $(document).ready(function () {
             }
         });
     });
-    // 打开添加页面
-    $(document).delegate('#addOne','click',function() {
-        // $('#addOneModal').modal('show');
-        window.open("/menu/add","_self");
-    });
     // 打开编辑页面
     $(document).delegate('#editOne','click',function() {
         var id=$(this).data("id");
         window.open("/api/menu/" + id,"_self");
     });
+    // 打开详情页面
+    $(document).delegate('#detailOne','click',function() {
+        var id=$(this).data("id");
+        $("#detailOneModal").modal("show");
+        $("#detailOneModal").on('show.bs.modal',function () {
+            $.ajax({
+                url: "/api/file/"+id,
+                async:true,
+                type:"GET",
+                dataType:"json",
+                cache:false,    //不允许缓存
+                success: function(data){
+                    alert(data.suffix);
+                    $(".id").html(data.id);
+                    $(".suffix").val(data.suffix);
+                }
+            });
+        });
+    });
     // 重置查询条件
     $(document).delegate('#reset','click',function() {
-        $("#menuName").val("");
-        $("#enabled").val("");
+        $("#suffix").val("");
     });
     // 查询操作
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
+
+
 });

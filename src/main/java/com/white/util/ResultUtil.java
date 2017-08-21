@@ -1,28 +1,28 @@
 package com.white.util;
 
-import com.white.web.exception.Result;
+import com.white.web.exception.JsonResult;
 
 /**
  * Created by White on 2017/8/2.
  */
 public class ResultUtil {
 
-    public static Result success(Object object) {
-        Result result = new Result();
-        result.setCode(0);
-        result.setMessage("成功");
-        result.setData(object);
-        return result;
+    public static JsonResult success(Object object) {
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setCode(0);
+        jsonResult.setMessage("成功");
+        jsonResult.setData(object);
+        return jsonResult;
     }
 
-    public static Result success() {
+    public static JsonResult success() {
         return success(null);
     }
 
-    public static Result error(Integer code, String msg) {
-        Result result = new Result();
-        result.setCode(code);
-        result.setMessage(msg);
-        return result;
+    public static JsonResult error(Integer code, String msg) {
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setCode(code);
+        jsonResult.setMessage(msg);
+        return jsonResult;
     }
 }

@@ -1,7 +1,9 @@
 package com.white;
 
+import com.white.entity.system.SysFile;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysUser;
+import com.white.mapper.SysFileMapper;
 import com.white.mapper.SysMenuMapper;
 import com.white.mapper.SysRoleMapper;
 import com.white.mapper.SysUserMapper;
@@ -28,6 +30,9 @@ public class SpringbootApplicationTests {
 
 	@Autowired
 	private SysMenuMapper sysMenuMapper;
+
+	@Autowired
+	private SysFileMapper sysFileMapper;
 
 	@Test
 	public void sysUserMapperTest() {
@@ -69,4 +74,10 @@ public class SpringbootApplicationTests {
 		System.out.println(sysMenuMapper.findList(sysMenu));
 	}
 
+	@Test
+	public void getSuffixTest() {
+		SysFile sysFile = new SysFile();
+		sysFile.setSuffix("");
+		System.out.println(sysFileMapper.findList(sysFile));
+	}
 }

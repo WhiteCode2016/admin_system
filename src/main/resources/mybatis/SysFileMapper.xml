@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.white.mapper.SysFileMapper">
+
+    <sql id="selectColumns">
+      SELECT DISTINCT
+            sf.id,
+            sf.original_file_name,
+            sf.suffix,
+            sf.size,
+            sf.content_type
+        FROM sys_file sf
+    </sql>
+
+    <!-- 分页查询菜单信息 -->
+    <select id="findList" resultType="com.white.entity.system.SysFile">
+        <include refid="selectColumns"/>
+        <if test="suffix != null and suffix != ''">
+            WHERE sf.suffix = #{suffix}
+        </if>
+    </select>
+
+    <!-- 根据Id获取文件 -->
+    <select id="get" resultType="com.white.entity.system.SysFile">
+        <include refid="selectColumns"/>
+        WHERE sf.id = #{id}
+    </select>
+
+    <!-- 添加一个菜单 -->
+    <insert id="insert">
+        INSERT INTO sys_file
+            (
+                id,
+                original_file_name,
+                suffix,
+                size,
+                content_type
+            ) VALUES (
+                #{id},
+                #{originalFileName},
+                #{suffix},
+                #{size},
+                #{contentType}
+            )
+    </insert>
+
+</mapper>

@@ -3,6 +3,7 @@ package com.white.service;
 
 
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+import com.white.entity.system.SysFile;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
@@ -55,5 +56,10 @@ public interface SystemService {
     void updateRole(SysRole sysRole);
     // 删除角色
     void deleteRole(String id);
+
+    // 按条件查询文件信息并分页
+    List<SysFile> getFileListByCondition(SysFile sysFile);
+    //通过Id获取文件
+    SysFile getFile(String id);
 
 }

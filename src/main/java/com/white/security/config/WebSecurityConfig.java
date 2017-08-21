@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/menu/**").permitAll()
                 .antMatchers("/role/**").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/file/**").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/static/**").permitAll()//访问：/static/** 无需登录认证权限
                 .anyRequest().authenticated() //其他所有资源都需要认证，登陆后访问

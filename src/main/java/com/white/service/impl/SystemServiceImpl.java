@@ -1,10 +1,12 @@
 package com.white.service.impl;
 
 
+import com.white.entity.system.SysFile;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
 import com.white.enums.ResultEnum;
+import com.white.mapper.SysFileMapper;
 import com.white.mapper.SysMenuMapper;
 import com.white.mapper.SysRoleMapper;
 import com.white.mapper.SysUserMapper;
@@ -35,6 +37,9 @@ public class SystemServiceImpl implements SystemService {
     // 系统菜单Mapper
     @Autowired
     private SysMenuMapper sysMenuMapper;
+    // 系统文件Mapper
+    @Autowired
+    private SysFileMapper sysFileMapper;
 
     @Override
     @Cacheable(value = "test")
@@ -157,6 +162,16 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public void deleteRole(String id) {
         sysRoleMapper.deleteById(id);
+    }
+
+    @Override
+    public List<SysFile> getFileListByCondition(SysFile sysFile) {
+        return sysFileMapper.findList(sysFile);
+    }
+
+    @Override
+    public SysFile getFile(String id) {
+        return sysFileMapper.get(id);
     }
 
 }

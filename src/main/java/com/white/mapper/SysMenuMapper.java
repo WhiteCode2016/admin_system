@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 菜单DAO接口
- * Created by White on 2017/7/19.
  */
 @Mapper
 public interface SysMenuMapper extends CrudDao<SysMenu>{

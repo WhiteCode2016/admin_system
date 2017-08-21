@@ -6,7 +6,7 @@ import com.white.entity.system.SysMenu;
 import com.white.service.SystemService;
 import com.white.util.DataTablePage;
 import com.white.util.ResultUtil;
-import com.white.web.exception.Result;
+import com.white.web.exception.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class MenuController {
     private SystemService systemService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Result<SysMenu> addMenu(@ModelAttribute SysMenu sysMenu) {
+    public JsonResult<SysMenu> addMenu(@ModelAttribute SysMenu sysMenu) {
         systemService.addMenu(sysMenu);
         return ResultUtil.success();
     }
@@ -40,13 +40,13 @@ public class MenuController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public Result<SysMenu> updateMenu(@ModelAttribute SysMenu sysMenu) {
+    public JsonResult<SysMenu> updateMenu(@ModelAttribute SysMenu sysMenu) {
         systemService.update(sysMenu);
         return ResultUtil.success();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Result<SysMenu> deleteMenu(@PathVariable String id) {
+    public JsonResult<SysMenu> deleteMenu(@PathVariable String id) {
         systemService.deleteMenu(id);
         return ResultUtil.success();
     }

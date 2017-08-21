@@ -3,11 +3,10 @@ package com.white.web.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.white.entity.system.SysRole;
-import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
 import com.white.util.DataTablePage;
 import com.white.util.ResultUtil;
-import com.white.web.exception.Result;
+import com.white.web.exception.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class RoleController {
     private SystemService systemService;
 
     @RequestMapping(value="/", method=RequestMethod.POST)
-    public Result<Object> postUser(@ModelAttribute SysRole sysRole) {
+    public JsonResult<Object> postUser(@ModelAttribute SysRole sysRole) {
         // 处理"/api/role/"的POST请求，用来创建User
         // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
         systemService.addRole(sysRole);
@@ -49,14 +48,14 @@ public class RoleController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public Result<Object> putUser1(@PathVariable String id, @ModelAttribute SysRole sysRole) {
+    public JsonResult<Object> putUser1(@PathVariable String id, @ModelAttribute SysRole sysRole) {
         // 处理"/users/{id}"的PUT请求，用来更新User信息
         systemService.updateRole(sysRole);
         return ResultUtil.success();
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public Result<Object> deleteUser(@PathVariable String id) {
+    public JsonResult<Object> deleteUser(@PathVariable String id) {
         // 处理"/users/{id}"的DELETE请求，用来删除User
         systemService.deleteRole(id);
         return ResultUtil.success();

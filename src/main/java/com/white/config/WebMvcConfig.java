@@ -33,6 +33,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         // 角色管理
         registry.addViewController("/role/add").setViewName("admin/role/role_add");
         registry.addViewController("/role/list").setViewName("admin/role/role_list");
+        // 文件管理
+        registry.addViewController("/file/add").setViewName("admin/file/file_add");
+        registry.addViewController("/file/list").setViewName("admin/file/file_list");
+
     }
 
     @Override

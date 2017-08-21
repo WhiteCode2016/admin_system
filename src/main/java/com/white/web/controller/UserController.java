@@ -6,7 +6,7 @@ import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
 import com.white.util.DataTablePage;
 import com.white.util.ResultUtil;
-import com.white.web.exception.Result;
+import com.white.web.exception.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/", method=RequestMethod.POST)
-    public Result<Object> postUser(@ModelAttribute SysUser sysUser) {
+    public JsonResult<Object> postUser(@ModelAttribute SysUser sysUser) {
         // 处理"/users/"的POST请求，用来创建User
         // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
         systemService.addUser(sysUser);
@@ -70,7 +70,7 @@ public class UserController {
         return "success";
     }*/
   @RequestMapping(value="/{id}", method=RequestMethod.POST)
-  public Result<Object> putUser1(@PathVariable String id, @ModelAttribute SysUser sysUser) {
+  public JsonResult<Object> putUser1(@PathVariable String id, @ModelAttribute SysUser sysUser) {
       // 处理"/users/{id}"的PUT请求，用来更新User信息
       logger.info(sysUser.toString());
       systemService.updateUser(sysUser);

@@ -3,7 +3,7 @@ package com.white.web.exception;
 /**
  * 返回结果信息类
  */
-public class Result<T> {
+public class JsonResult<T> {
     // 错误码
     private Integer code;
     // 提示信息

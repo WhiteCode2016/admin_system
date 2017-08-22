@@ -15,6 +15,8 @@ public class SysFile extends DataEntity {
     private long size;
     // 文件类型
     private String contentType;
+    // 用户Id
+    private String userId;
 
     public String getOriginalFileName() {
         return originalFileName;
@@ -46,5 +48,13 @@ public class SysFile extends DataEntity {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -1,6 +1,7 @@
 package com.white;
 
 import com.white.entity.system.SysFile;
+import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,5 +20,15 @@ public class ServiceTests {
         SysFile sysFile = new SysFile();
         sysFile.setSuffix("");
         System.out.println(systemService.getFileListByCondition(sysFile));
+    }
+
+    @Test
+    public void insert() {
+        SysUser sysUser = new SysUser();
+        sysUser.setUsername("root");
+		sysUser.setPassword("123");
+		sysUser.setEnabled(true);
+		sysUser.setRemarks("This is Test");
+		systemService.addUserIncludeFile(sysUser,null);
     }
 }

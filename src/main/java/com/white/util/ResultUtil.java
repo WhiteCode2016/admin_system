@@ -11,6 +11,7 @@ public class ResultUtil {
         JsonResult jsonResult = new JsonResult();
         jsonResult.setCode(0);
         jsonResult.setMessage("成功");
+//        jsonResult.setMessage(msg);
         jsonResult.setData(object);
         return jsonResult;
     }

@@ -44,10 +44,10 @@ public class FileController {
         }
         // 获取文件名
         String fileName = file.getOriginalFilename();
-        logger.info("上传的文件名为：" + fileName);
+        logger.info("文件名：" + fileName);
         // 获取文件的后缀名
         String suffix = fileName.substring(fileName.lastIndexOf("."));
-        logger.info("上传的后缀名为：" + suffix);
+        logger.info("后缀名：" + suffix);
         // 文件大小
         long size = file.getSize();
         logger.info("文件大小：" + size);
@@ -84,9 +84,18 @@ public class FileController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public SysFile getUser(@PathVariable String id) {
+    public ModelAndView getUser(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
         SysFile sysFile = systemService.getFile(id);
-        return sysFile;
+        modelAndView.addObject("sysFile",sysFile);
+        modelAndView.setViewName("admin/file/file_detail");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public JsonResult deleteMenu(@PathVariable String id) {
+        systemService.deleteFile(id);
+        return ResultUtil.success();
     }
 
     @RequestMapping(value="/listByPage", method= RequestMethod.POST)

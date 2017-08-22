@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.css}">
     <style type="text/css">
@@ -61,78 +61,11 @@
             </div>
         </section>
     </div>
-    <!--单个删除确认对话框-->
-    <div class="modal fade" id="deleteOneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <form class="form-horizontal" role="form">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">提示信息</h4>
-                    </div>
-                    <div class="modal-body" style="text-align: left;">
-                        <h5>您确定要删除当前信息吗？</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-sm btn-primary" id="delSubmit">确认</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!--详情页面-->
-    <div class="modal fade" id="detailOneModal" tabindex="-1" role="dialog" aria-labelledby="detailOneModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">文件详情</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" action="" method="POST"  id="addForm">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >文件编号:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="id" name="id" style="width: 250px"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >文件名称:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="originalFileName" name="originalFileName" style="width: 250px"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >文件后缀:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="suffix" style="width: 250px" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >文件大小:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="size" name="size" style="width: 250px" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >文件类型:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="contentType" name="contentType" style="width: 250px" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- DataTables -->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/layer/layer.js}"></script>
     <!-- 自定义JS-->
     <script th:src="@{/static/system/file/file.js}"></script>
 </html>

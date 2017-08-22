@@ -8,7 +8,8 @@
             sf.original_file_name,
             sf.suffix,
             sf.size,
-            sf.content_type
+            sf.content_type,
+            sf.userId
         FROM sys_file sf
     </sql>
 
@@ -34,14 +35,22 @@
                 original_file_name,
                 suffix,
                 size,
-                content_type
+                content_type,
+                userId
             ) VALUES (
                 #{id},
                 #{originalFileName},
                 #{suffix},
                 #{size},
-                #{contentType}
+                #{contentType},
+                #{userId}
             )
     </insert>
+
+    <!-- 删除文件 -->
+    <delete id="deleteById">
+        DELETE FROM sys_file
+        WHERE id = #{id}
+    </delete>
 
 </mapper>

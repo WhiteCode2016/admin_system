@@ -7,6 +7,8 @@ import com.white.entity.system.SysFile;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 /**
@@ -24,6 +26,8 @@ public interface SystemService {
     List<SysUser> getUserListByCondition(SysUser sysUser);
     // 添加用户
     void addUser(SysUser sysUser);
+    // 添加用户（包含文件）
+    void addUserIncludeFile(SysUser sysUser, MultipartFile file);
     // 编辑用户
     void updateUser(SysUser sysUser);
     // 删除用户
@@ -61,5 +65,8 @@ public interface SystemService {
     List<SysFile> getFileListByCondition(SysFile sysFile);
     //通过Id获取文件
     SysFile getFile(String id);
+    // 删除文件
+    void deleteFile(String id);
+
 
 }

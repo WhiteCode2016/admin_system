@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,21 +37,24 @@ public class UserController {
         return sysUsers;
     }
 
+//    @RequestMapping(value="/", method=RequestMethod.POST)
+//    public JsonResult<Object> postUser(@ModelAttribute SysUser sysUser) {
+//        // 处理"/users/"的POST请求，用来创建User
+//        // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
+//        systemService.addUser(sysUser);
+//        return ResultUtil.success();
+////        return "success";
+//    }
+
     @RequestMapping(value="/", method=RequestMethod.POST)
-    public JsonResult<Object> postUser(@ModelAttribute SysUser sysUser) {
+    public JsonResult<Object> postUser(@ModelAttribute SysUser sysUser, MultipartFile file) {
         // 处理"/users/"的POST请求，用来创建User
         // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
-        systemService.addUser(sysUser);
+//        systemService.addUserIncludeFile(sysUser,file);
         return ResultUtil.success();
 //        return "success";
     }
 
-  /*  @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public SysUser getUser(@PathVariable String id) {
-        // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
-        // url中的id可通过@PathVariable绑定到函数的参数中
-        return systemService.getUser(id);
-    }*/
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ModelAndView getUser(@PathVariable String id) {
       // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
@@ -62,13 +66,6 @@ public class UserController {
         return modelAndView;
     }
 
-   /* @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public String putUser(@PathVariable String id, @ModelAttribute SysUser sysUser) {
-        // 处理"/users/{id}"的PUT请求，用来更新User信息
-        logger.info(sysUser.toString());
-        systemService.updateUser(sysUser);
-        return "success";
-    }*/
   @RequestMapping(value="/{id}", method=RequestMethod.POST)
   public JsonResult<Object> putUser1(@PathVariable String id, @ModelAttribute SysUser sysUser) {
       // 处理"/users/{id}"的PUT请求，用来更新User信息

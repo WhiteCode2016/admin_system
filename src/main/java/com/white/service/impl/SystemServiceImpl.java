@@ -1,6 +1,7 @@
 package com.white.service.impl;
 
 
+import com.white.common.SysConstants;
 import com.white.entity.system.SysFile;
 import com.white.entity.system.SysMenu;
 import com.white.entity.system.SysRole;
@@ -17,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -84,6 +87,16 @@ public class SystemServiceImpl implements SystemService {
     public void addUser(SysUser sysUser) {
         sysUser.preInsert();
         sysUserMapper.insert(sysUser);
+    }
+
+    @Override
+    public void addUserIncludeFile(SysUser sysUser, MultipartFile file) {
+        sysUser.preInsert();
+        // 保存用户基本信息
+        sysUserMapper.insert(sysUser);
+        logger.info("======================="+sysUser.getId());
+        unifileUpload(file,sysUser.getId());
+
     }
 
     @Override
@@ -174,4 +187,64 @@ public class SystemServiceImpl implements SystemService {
         return sysFileMapper.get(id);
     }
 
+    @Override
+    public void deleteFile(String id) {
+        sysFileMapper.deleteById(id);
+    }
+
+
+    //单文件上传
+    public void unifileUpload(MultipartFile file, String userId) {
+        saveFile(file,userId);
+    }
+
+    // 多文件上传
+    public void morefileUpload(MultipartFile[] files, String userId) {
+        //判断file数组不能为空并且长度大于0
+        if (files != null && files.length > 0){
+            //循环获取file数组中得文件
+            for (int i = 0; i < files.length; i++){
+                MultipartFile file = files[i];
+                //保存文件
+                saveFile(file,userId);
+            }
+        }
+    }
+
+    // 上传文件到目标目录并保存到数据库
+    public void saveFile(MultipartFile file,String userId) {
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+            try {
+                // 获取文件名
+                String fileName = file.getOriginalFilename();
+                // 获取文件的后缀名
+                String suffix = fileName.substring(fileName.lastIndexOf("."));
+                // 文件大小
+                long size = file.getSize();
+                // 文件类型
+                String contentType = file.getContentType();
+
+                // 文件上传到的路径
+                String filePath = SysConstants.UPLOAD_PATH;
+                File dest = new File(filePath + fileName);
+                // 检测是否存在目录
+                if (!dest.getParentFile().exists()) {
+                    dest.getParentFile().mkdirs();
+                }
+                file.transferTo(new File(filePath));
+                // 保存到数据库操作
+                SysFile sysFile = new SysFile();
+                sysFile.preInsert();
+                sysFile.setOriginalFileName(fileName);
+                sysFile.setSuffix(suffix);
+                sysFile.setSize(size);
+                sysFile.setContentType(contentType);
+                sysFile.setUserId(userId);
+                sysFileMapper.insert(sysFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

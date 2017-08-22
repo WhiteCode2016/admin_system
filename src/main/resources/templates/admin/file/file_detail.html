@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/modal_v1 :: modal_v1(_,_,~{::div},_)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >文件编号:</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${sysFile.id}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >文件名称:</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${sysFile.originalFileName}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >文件后缀:</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${sysFile.suffix}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >文件大小:</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${sysFile.size}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >文件类型:</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${sysFile.contentType}"></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>

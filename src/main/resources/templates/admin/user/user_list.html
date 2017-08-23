@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.css}">
     <style type="text/css">
@@ -72,171 +72,12 @@
             </div>
         </section>
     </div>
-    <!--单个删除确认对话框-->
-    <div class="modal fade" id="deleteOneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" > <!-- data-backdrop="static" 禁止点击弹框后面内容 -->
-        <form class="form-horizontal" role="form">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">提示信息</h4>
-                    </div>
-                    <div class="modal-body" style="text-align: left;">
-                        <h5>您确定要删除当前信息吗？</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-sm btn-primary" id="delSubmit">确认</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!--多个删除确认对话框-->
-    <div class="modal fade" id="deleteAllModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <form class="form-horizontal" role="form">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                                data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">
-                            提示信息
-                        </h4>
-                    </div>
-                    <div class="modal-body" style="text-align: left;">
-                        <h5>您确定要删除选中信息吗？</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <!--
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">取消
-                            </button>
-                             -->
-                        <button type="button" class="btn btn-primary" id="delAllSubmit">
-                            确认
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div>
-        </form>
-    </div>
-    <!--新增页面开始-->
-    <div class="modal fade" id="addOneModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title">
-                        新 增
-                    </h4>
-                </div>
-                <form class="form-horizontal" role="form" action="" method="POST"  id="addForm">
-                    <div class="modal-body">
-                       <!-- <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" >图 片：</label>
-                            <div class="col-sm-5">
-                                <input  type="file" name="img1" class="file" id="img1"  style="width:180px; float: left" />
-                            </div>
-                            <div class="col-sm-3">
-                                <input class="btn btn-sm btn-info" type="button" value="上传" id="uploadimg"/><span id="t"></span>
-                            </div>
-                            <input name="categoryImg" type="hidden" id="imageUrl" />
-                        </div>-->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >用户编号:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="id" style="width: 250px"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >用户名称:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="username" style="width: 250px" maxlength="15" placeholder="10个汉字以内" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >用户密码:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="password" style="width: 250px" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >用户是否可用:</label>
-                            <div class="control-group">
-                                <div class="radio col-sm-3" style="float: left">
-                                    <label>
-                                        <input  type="radio" class=" yn1" name="enabled"  value="1"  checked/>
-                                        <span class="lbl">可用</span>
-                                    </label>
-                                </div>
-                                <div class="radio col-sm-3" style="float: left">
-                                    <label>
-                                        <input  type="radio" class=" yn1" name="enabled"  value="0"/>
-                                        <span class="lbl">不可用</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" >备注:</label>
-                            <div class="col-sm-9">
-                                <textarea rows="5" cols="10" class="form-control" id="remarks" name="remarks"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary" id="btn_save">保存</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 编辑状态弹框 -->
-    <div class="modal fade" id="editOneModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        编辑状态弹框 &nbsp;&nbsp;<span id="titleId"></span>
-                    </h4>
-                </div>
-                <form class="form-horizontal" action="" method="post"  >
-                    <div class="modal-body ">
-                        <div class="form-group">
-                            <input type="hidden" id="id" name="id" />
-                            <label class="col-sm-4 control-label">请选择用户状态：</label>
-                            <div class="col-sm-5">
-                                <select class="form-control orderStatus" style="width: 150px"  name="orderStatus">
-                                    <option value="1">可用</option>
-                                    <option value="0">不可用</option>
-                                </select>
-                            </div>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-sm btn-primary" >确定</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- DataTables -->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+    <!-- layer -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/layer/layer.js}"></script>
     <!-- 自定义JS-->
     <script th:src="@{/static/system/user/user.js}"></script>
 </html>

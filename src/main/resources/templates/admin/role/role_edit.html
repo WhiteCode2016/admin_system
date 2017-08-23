@@ -31,7 +31,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>角色是否可用</label>
-                                        <select class="form-control" style="width: 100%;" name="enabled" id="enabled" th:value="${sysRole.enabled}">
+                                        <select class="form-control" name="enabled" id="enabled" th:field="${sysRole.enabled}">
+                                            <option value="">--请选择--</option>
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>

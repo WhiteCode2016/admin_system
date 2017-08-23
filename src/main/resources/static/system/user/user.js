@@ -42,10 +42,8 @@ $(document).ready(function () {
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                  /*  return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
-                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';*/
-                    return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ';
+                    return	data='<button class="btn btn-primary btn-xs" id="deleteOne" title="删除" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="editOne" title="编辑"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ';
                 }
             }
         ],
@@ -61,35 +59,6 @@ $(document).ready(function () {
         $("#topPlugin").append(topPlugin);
     }
 
-    //单行删除按钮点击事件响应
-    $(document).delegate('#deleteOne','click',function() {
-        var id = $(this).data("id");
-        $("#delSubmit").val(id);
-        $("#deleteOneModal").modal('show');
-    });
-    //点击确认删除按钮
-    $(document).delegate('#delSubmit','click',function(){
-        var id=$(this).val();
-        $('#deleteOneModal').modal('hide');
-        $.ajax({
-            url: "/api/user/"+id,
-            async:true,
-            type:"DELETE",
-            dataType:"json",
-            cache:false,    //不允许缓存
-            success: function(data){
-                var obj = eval(data);
-                if(obj.code==1) {
-                    window.location.reload();
-                } else {
-                    alert("删除失败");
-                }
-            },
-            error:function(data){
-                alert("请求异常");
-            }
-        });
-    });
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
         // $('#addOneModal').modal('show');
@@ -112,23 +81,28 @@ $(document).ready(function () {
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
-
-    // $(document).delegate("#btn_save", 'click',function () {
-    //     $('#addOneModal').modal('hide');
-    //     $.ajax({
-    //         url: "/api/user/",
-    //         async:true,
-    //         type:"POST",
-    //         dataType:"json",
-    //         cache:false,    //不允许缓存
-    //         data:$("#addForm").serialize(),
-    //         success: function(data){
-    //             alert("添加成功");
-    //         },
-    //         error:function(data){
-    //             alert("请求异常");
-    //         }
-    //     });
-    // });
-
+    //单行删除操作
+    $(document).delegate('#deleteOne','click',function() {
+        var id = $(this).data("id");
+        layer.confirm('您确定要删除当前信息吗？', {icon: 3, title:'提示信息'}, function(index) {
+            $.ajax({
+                url: "/api/user/" + id,
+                async: true,
+                type: "DELETE",
+                dataType: "json",
+                cache: false,    //不允许缓存
+                success: function(data) {
+                    layer.msg(data.message, {time: 1500},function(){
+                        table.ajax.reload();
+                        layer.close(index);
+                    });
+                },
+                error: function () {
+                    layer.msg("数据异常", {time: 1500},function(){
+                        layer.close(index);
+                    });
+                }
+            });
+        });
+    });
 });

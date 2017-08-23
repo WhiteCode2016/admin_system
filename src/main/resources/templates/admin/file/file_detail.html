@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/modal_v1 :: modal_v1(_,_,~{::div},_)">
-    <div class="container">
+   <!-- <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <form class="form-horizontal">
+                <form class="form-horizontal" style="margin-top: 20px;">
                     <div class="form-group">
                         <label class="col-sm-3 control-label" >文件编号:</label>
                         <div class="col-sm-9">
@@ -34,8 +34,49 @@
                             <p class="form-control-static" th:text="${sysFile.contentType}"></p>
                         </div>
                     </div>
+                    <div class="form-group" style="text-align: center;">
+                        <button type="button" class="btn btn-sm btn-default" id="btn_close">关 闭</button>
+                    </div>
                 </form>
             </div>
         </div>
+    </div>-->
+    <div>
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件编号:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="id" th:value="${sysFile.id}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件名称:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="originalFileName" th:value="${sysFile.originalFileName}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件后缀:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="suffix" th:value="${sysFile.suffix}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件大小:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="size" th:value="${sysFile.size}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件类型:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="contentType" th:value="${sysFile.contentType}" />
+                </div>
+            </div>
+            <!--<div class="layui-form-item" style="text-align: center;">
+                <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary" id="btn_close">关 闭</button>
+            </div>-->
+        </form>
     </div>
 </html>

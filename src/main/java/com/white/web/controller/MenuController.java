@@ -33,8 +33,19 @@ public class MenuController {
     public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         SysMenu sysMenu = systemService.getMenu(id);
+        List<SysMenu> sysMenuParents = systemService.getAllMenus();
         modelAndView.addObject("sysMenu",sysMenu);
+        modelAndView.addObject("sysMenuParents",sysMenuParents);
         modelAndView.setViewName("admin/menu/menu_edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
+    public ModelAndView getMenuDetail(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        SysMenu sysMenu = systemService.getMenu(id);
+        modelAndView.addObject("sysMenu",sysMenu);
+        modelAndView.setViewName("admin/menu/menu_detail");
         return modelAndView;
     }
 

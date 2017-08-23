@@ -25,17 +25,24 @@
                                         <input type="text" class="form-control" id="id" name="id" th:value="${sysMenu.id}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="menuName">菜单名</label>
+                                        <label for="menuName">菜单名称</label>
                                         <input type="text" class="form-control" id="menuName" name="menuName" th:value="${sysMenu.menuName}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="parentId">父级菜单</label>
-                                        <input type="text" class="form-control" id="parentId" name="parentId" th:value="${sysMenu.parentId}"/>
+                                        <label>父级菜单</label>
+                                        <select class="form-control" name="parentId" id="parentId" th:field="${sysMenu.parentId}">
+                                            <!-- 动态生成下拉菜单列表 -->
+                                            <option value="">--请选择--</option>
+                                            <option th:each="sysMenuParent : ${sysMenuParents}"
+                                                    th:value="${sysMenuParent.id}"
+                                                    th:text="${sysMenuParent.menuName}">
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="href">链接</label>
+                                        <label for="href">菜单URL</label>
                                         <input type="text" class="form-control" id="href" name="href" th:value="${sysMenu.href}"/>
                                     </div>
                                     <div class="form-group">
@@ -50,7 +57,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>菜单是否可用</label>
-                                        <select class="form-control" style="width: 100%;" name="show" id="show" th:value="${sysMenu.show}">
+                                        <select class="form-control" style="width: 100%;" name="show" id="show" th:field="${sysMenu.show}">
+                                            <option value="">--请选择--</option>
                                             <option value="1">是</option>
                                             <option value="0">否</option>
                                         </select>

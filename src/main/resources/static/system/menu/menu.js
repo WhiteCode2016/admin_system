@@ -14,7 +14,6 @@ $(document).ready(function () {
             "url": "/static/AdminLTE-2.3.11/plugins/datatables/i18n/Chinese.json"
         },
         "ajax": {
-            // "url": "/static/objects.txt",
             "url": "/api/menu/listByPage",
             "type": "POST",
             "data": function (d) {
@@ -49,10 +48,9 @@ $(document).ready(function () {
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                   /* return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
-                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';*/
                     return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ';
+                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="detailOne" title="详情" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
                 }
             }
         ],
@@ -68,35 +66,7 @@ $(document).ready(function () {
         $("#topPlugin").append(topPlugin);
     }
 
-    //单行删除按钮点击事件响应
-    $(document).delegate('#deleteOne','click',function() {
-        var id = $(this).data("id");
-        $("#delSubmit").val(id);
-        $("#deleteOneModal").modal('show');
-    });
-    //点击确认删除按钮
-    $(document).delegate('#delSubmit','click',function(){
-        var id=$(this).val();
-        $('#deleteOneModal').modal('hide');
-        $.ajax({
-            url: "/api/user/"+id,
-            async:true,
-            type:"DELETE",
-            dataType:"json",
-            cache:false,    //不允许缓存
-            success: function(data){
-                var obj = eval(data);
-                if(obj.code==1) {
-                    window.location.reload();
-                } else {
-                    alert("删除失败");
-                }
-            },
-            error:function(data){
-                alert("请求异常");
-            }
-        });
-    });
+
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
         // $('#addOneModal').modal('show');
@@ -107,6 +77,18 @@ $(document).ready(function () {
         var id=$(this).data("id");
         window.open("/api/menu/" + id,"_self");
     });
+    // 打开详情页面
+    $(document).delegate('#detailOne','click',function() {
+        var id = $(this).data("id");
+        var index = layer.open({
+            type: 2,
+            title: '菜单详情',
+            shadeClose: false,
+            shade: 0.8,
+            area: ['830px', '450px'],
+            content: '/api/menu/detail/' + id
+        });
+    });
     // 重置查询条件
     $(document).delegate('#reset','click',function() {
         $("#menuName").val("");
@@ -115,5 +97,29 @@ $(document).ready(function () {
     // 查询操作
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
+    });
+    //单行删除操作
+    $(document).delegate('#deleteOne','click',function() {
+        var id = $(this).data("id");
+        layer.confirm('您确定要删除当前信息吗？?', {icon: 3, title:'提示信息'}, function(index){
+            $.ajax({
+                url: "/api/user/"+id,
+                async:true,
+                type:"DELETE",
+                dataType:"json",
+                cache:false,    //不允许缓存
+                success: function(data) {
+                    layer.msg(data.message, {time: 2000},function(){
+                        table.ajax.reload();
+                        layer.close(index);
+                    });
+                },
+                error: function () {
+                    layer.msg("数据异常", {time: 2000},function(){
+                        layer.close(index);
+                    });
+                }
+            });
+        });
     });
 });

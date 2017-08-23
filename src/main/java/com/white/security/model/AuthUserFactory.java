@@ -62,8 +62,7 @@ public final class AuthUserFactory {
     public static List<SysMenu> menuTree(List<SysMenu> sysMenus) {
         List<SysMenu> menuParents = new ArrayList<SysMenu>();
         for (SysMenu sysMenu : sysMenus) {
-//            if (sysMenu.getParentId() == null || sysMenu.getParentId().equals("")) {
-            if (sysMenu.getParentId().equals("#")) {
+            if (sysMenu.getParentId() == null || sysMenu.getParentId().equals("")) {
                 // 获取所有的父节点
                 menuParents.add(sysMenu);
             }

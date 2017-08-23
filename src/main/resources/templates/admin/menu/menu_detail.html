@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/modal_v1 :: modal_v1(_,_,~{::div},_)">
+    <div>
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <div>
+                    <label class="layui-form-label">菜单编号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" disabled="disabled" name="id" th:value="${sysMenu.id}" />
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单名称:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="originalFileName" th:value="${sysMenu.menuName}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">父级菜单:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="suffix" th:value="${sysMenu.parentId}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单URL:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="size" th:value="${sysMenu.href}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">图标:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="contentType" th:value="${sysMenu.icon}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" name="contentType" th:value="${sysMenu.sort}" />
+                </div>
+            </div>
+            <!--<div class="layui-form-item" style="text-align: center;">
+                <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary" id="btn_close">关 闭</button>
+            </div>-->
+        </form>
+    </div>
+</html>

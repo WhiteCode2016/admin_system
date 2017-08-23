@@ -1,4 +1,7 @@
-<header class="main-header" th:fragment="header">
+<header class="main-header"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:th="http://www.thymeleaf.org"
+        th:fragment="header">
     <!-- 系统logo -->
     <a href="index2.html" class="logo">
         <!-- 侧边栏未展开显示的mini_logo -->
@@ -127,9 +130,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img th:src="@{/static/AdminLTE-2.3.11/dist/img/user2-160x160.jpg}" class="user-image" alt="User Image">
                         <!-- 当前用户名 -->
-                        <div sec:authorize="isAuthenticated()">
-                            <span class="hidden-xs" sec:authentication="principal.userNameCn"></span>
-                        </div>
+                        <span class="hidden-xs" sec:authorize="isAuthenticated()" sec:authentication="principal.userNameCn"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">

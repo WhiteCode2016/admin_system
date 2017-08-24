@@ -20,13 +20,16 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.util.List;
 
 /**
  * 系统管理实现类,包括用户、角色、菜单.
+ * 进行事务管理
  */
 @Service
+@Transactional
 public class SystemServiceImpl implements SystemService {
 
     private static final Logger logger = LoggerFactory.getLogger(SystemServiceImpl.class);
@@ -53,7 +56,8 @@ public class SystemServiceImpl implements SystemService {
         }
         String userId = sysUser.getId();
         // 获取用户所拥有的角色列表
-        sysUser.setRoles(sysRoleMapper.getRolesByUserId(userId));
+        List<SysRole> roles = sysRoleMapper.getRolesByUserId(userId);
+        sysUser.setRoles(roles);
 
         List<SysMenu> menuList = null;
 
@@ -69,13 +73,21 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public List<SysUser> getAllUsers() {
-        return sysUserMapper.findAllList();
+    public SysUser getUser(String id) {
+        return sysUserMapper.get(id);
     }
 
     @Override
-    public SysUser getUser(String id) {
-        return sysUserMapper.get(id);
+    public SysUser getUserAndRole(String id) {
+        SysRole role = sysRoleMapper.getRoleByUserId(id);
+        SysUser sysUser = sysUserMapper.get(id);
+        sysUser.setRole(role);
+        return sysUser;
+    }
+
+    @Override
+    public List<SysUser> getAllUsers() {
+        return sysUserMapper.findAllList();
     }
 
     @Override
@@ -87,6 +99,17 @@ public class SystemServiceImpl implements SystemService {
     public void addUser(SysUser sysUser) {
         sysUser.preInsert();
         sysUserMapper.insert(sysUser);
+    }
+
+    @Override
+    public void addUserAndRole(SysUser sysUser) {
+        sysUser.preInsert();
+        // 保存用户信息到（用户表）
+        sysUserMapper.insert(sysUser);
+        String userId = sysUser.getId();
+        String roleId = sysUser.getRole().getId();
+        // 保存userId、roleId到（用户--角色表）
+        sysUserMapper.insertUserAndRole(userId,roleId);
     }
 
     @Override
@@ -105,7 +128,22 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
+    public void updateUserAndRole(SysUser sysUser) {
+        String userId = sysUser.getId();
+        String roleId = sysUser.getRole().getId();
+        // 根据userId删除（用户--角色表）中的全部信息
+        sysUserMapper.deleteRoleByUserId(userId);
+        // 更新用户基本信息
+        sysUserMapper.update(sysUser);
+        // 将userId、roleId插入用户--角色表）
+        sysUserMapper.insertUserAndRole(userId, roleId);
+    }
+
+    @Override
     public void deleteUser(String id) {
+        // 根据userId删除（用户--角色表）中的全部信息
+        sysUserMapper.deleteRoleByUserId(id);
+        // 删除用户表信息
         sysUserMapper.deleteById(id);
     }
 
@@ -160,6 +198,11 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public SysRole getRole(String id) {
         return sysRoleMapper.get(id);
+    }
+
+    @Override
+    public List<SysRole> getAllRoles() {
+        return sysRoleMapper.getAllRoles();
     }
 
     @Override

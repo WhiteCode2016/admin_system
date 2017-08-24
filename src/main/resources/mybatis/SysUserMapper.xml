@@ -17,27 +17,19 @@
         FROM sys_user su
     </sql>
 
-    <!-- 根据编号获取用户 -->
-    <select id="get" resultType="com.white.entity.system.SysUser">
+    <!-- 根据用户Id获取用户 -->
+    <select id="get" resultType="SysUser">
         <include refid="selectColumns" />
         WHERE su.id = #{id}
     </select>
-
-    <!-- 根据登录名获取用户 -->
-    <select id="getUserByUserName" resultType="com.white.entity.system.SysUser">
-        <include refid="selectColumns" />
-        WHERE su.username = #{username}
-    </select>
-
     <!-- 查询全部用户 -->
-    <select id="findAllList" resultType="com.white.entity.system.SysUser">
+    <select id="findAllList" resultType="SysUser">
         <include refid="selectColumns"/>
         WHERE su.del_flag = '0'
         ORDER BY su.create_date
     </select>
-
     <!-- 分页查询用户信息 -->
-    <select id="findList" resultType="com.white.entity.system.SysUser">
+    <select id="findList" resultType="SysUser">
         <include refid="selectColumns"/>
         WHERE su.del_flag = '0'
         <if test="username != null and username != ''">
@@ -49,35 +41,11 @@
         </if>
         ORDER BY su.create_date
     </select>
-
     <!-- 插入用户 -->
     <insert id="insert">
-        INSERT INTO sys_user
-            (
-                id,
-                username,
-                password,
-                icon,
-                userNameCn,
-                userNameEN,
-                enabled,
-                remarks,
-                create_date,
-                update_date
-            ) VALUES (
-                #{id},
-                #{username},
-                #{password},
-                #{icon},
-                #{userNameCn},
-                #{userNameEn},
-                #{enabled},
-                #{remarks},
-                #{createDate},
-                #{updateDate}
-            )
+        INSERT INTO sys_user(id,username,password,icon,userNameCn,userNameEN,enabled,remarks,create_date,update_date)
+        VALUES (#{id},#{username},#{password},#{icon},#{userNameCn},#{userNameEn},#{enabled},#{remarks},#{createDate},#{updateDate})
     </insert>
-
     <!-- 更新用户 -->
     <update id="update">
         UPDATE sys_user
@@ -92,43 +60,35 @@
         </set>
         WHERE id = #{id}
     </update>
-
-    <!-- 保存用户信息 -->
-    <update id="updateInfo">
-        UPDATE sys_user
-        <set>
-            update_date = #{updateDate},
-            remarks = #{remarks}
-        </set>
-        WHERE id = #{id}
-    </update>
-
-    <!-- 更新用户密码 -->
-    <update id="updatePasswordByUserId">
-        UPDATE sys_user
-        SET password = ${password}
-        WHERE id = ${id}
-    </update>
-
     <!-- 删除用户 -->
-    <update id="deleteById">
-        UPDATE sys_user
-        SET del_flag = '1'
-        WHERE id = #{id}
-    </update>
-
-    <!-- 删除用户和角色关联表数据 -->
-    <delete id="deleteUserRole">
-        DELETE FROM sys_user_role
-        WHERE user_id = #{id}
+    <delete id="deleteById">
+        DELETE FROM sys_user WHERE id = #{id}
     </delete>
 
-    <!-- 插入用户和角色关联表数据 -->
-    <insert id="insertUserRole">
-        INSERT INTO sys_user_role(user_id, role_id)
-        <foreach collection="roles" item="role" separator=" union all ">
-            SELECT #{id}, #{role.id} FROM dual
-        </foreach>
-    </insert>
+    <!--
+        ##############################################################################
+                                        自定义函数实现
+        ##############################################################################
+    -->
 
+    <!-- 根据登录名获取用户 -->
+    <select id="getUserByUserName" resultType="SysUser">
+        <include refid="selectColumns" />
+        WHERE su.username = #{username}
+    </select>
+    <!-- 将userId和roleId添加到表中，建立用户与角色的对应关系-->
+    <insert id="insertUserAndRole">
+        INSERT INTO sys_user_role
+            (
+              user_id,
+              role_id
+            ) VALUES (
+              #{userId},
+              #{roleId}
+            )
+    </insert>
+    <!-- 根据userId删除（用户-角色表）中的全部信息 -->
+    <delete id="deleteRoleByUserId">
+        DELETE FROM sys_user_role WHERE user_id = #{userId}
+    </delete>
 </mapper>

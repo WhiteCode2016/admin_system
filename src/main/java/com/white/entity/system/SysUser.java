@@ -27,6 +27,8 @@ public class SysUser extends DataEntity {
     private Boolean enabled;
     // 备注
     private String remarks;
+    // 拥有角色
+    private SysRole role;
     // 角色列表
     private List<SysRole> roles = new ArrayList<>();
     // 菜单列表
@@ -96,6 +98,14 @@ public class SysUser extends DataEntity {
         this.remarks = remarks;
     }
 
+    public SysRole getRole() {
+        return role;
+    }
+
+    public void setRole(SysRole role) {
+        this.role = role;
+    }
+
     public List<SysRole> getRoles() {
         return roles;
     }
@@ -117,10 +127,12 @@ public class SysUser extends DataEntity {
         return "SysUser{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", icon='" + icon + '\'' +
                 ", userNameCn='" + userNameCn + '\'' +
                 ", userNameEn='" + userNameEn + '\'' +
                 ", enabled=" + enabled +
                 ", remarks='" + remarks + '\'' +
+                ", role=" + role +
                 ", roles=" + roles +
                 ", menus=" + menus +
                 '}';

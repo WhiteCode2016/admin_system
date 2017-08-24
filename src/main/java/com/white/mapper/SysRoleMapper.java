@@ -15,4 +15,11 @@ public interface SysRoleMapper extends CrudDao<SysRole> {
 
     // 通过userId获取用户所拥有的角色
     List<SysRole> getRolesByUserId(String userId);
+
+    // 通过userId获取用户所拥有的角色
+    SysRole getRoleByUserId(String userId);
+
+    // 获取所有的菜单列表
+    List<SysRole> getAllRoles();
+
 }

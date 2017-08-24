@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/modal_v1 :: modal_v1(_,_,~{::div},~{::script})">
+    <div>
+        <form class="layui-form ">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户编号</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.id}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.username}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文名</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.userNameCn}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文名</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.userNameEn}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分配角色</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.role != null ? sysUser.role.roleName : ''}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户是否可用</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" disabled="disabled" th:value="${sysUser.enabled ? '是' : '否'}" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">创建日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" disabled="disabled" th:value="${#dates.format(sysUser.createDate,'yyyy/MM/dd')}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">修改日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" disabled="disabled" th:value="${#dates.format(sysUser.updateDate,'yyyy/MM/dd')}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" disabled="disabled" th:text="${sysUser.remarks}"></textarea>
+                </div>
+            </div>
+            <!--<div class="layui-form-item" style="text-align: center;">
+               <button class="layui-btn layui-btn-primary" id="btn_close">关 闭</button>
+           </div>-->
+        </form>
+    </div>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+        });
+    </script>
+</html>

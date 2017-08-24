@@ -70,8 +70,7 @@ public class SpringbootApplicationTests {
 
 	@Test
 	public void findList2() {
-		SysMenu sysMenu = new SysMenu();
-		System.out.println(sysMenuMapper.findList(sysMenu));
+		sysUserMapper.deleteRoleByUserId("85c1feaff9b34e15aaf2970abf068c91");
 	}
 
 	@Test

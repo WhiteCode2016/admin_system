@@ -11,53 +11,45 @@ $(function () {
     $(".datepicker").datepicker("setDate", new Date());
 
     // 添加操作
-    $(document).delegate("#btn_add", 'click',function () {
-        $.ajax({
-            url: "/api/user/",
-            async:true,
-            type:"POST",
-            dataType:"json",
-            cache:false,    //不允许缓存
-            data:$("#addForm").serialize(),
-            success: function(data){
-                if (data.code == 0) {
-//                             layer.msg("添加成功", {icon: 1, time: 1500});
-                    alert("添加成功");
-                }else {
-//                             layer.msg("操作失败", {icon: 1, time: 1500});
-                    alert("添加失败");
-                }
-            },
-            error:function(data){
-//                         layer.msg("请求异常", {icon: 1, time: 1500});
-                alert("请求异常");
-            }
-        });
-    });
+    // $(document).delegate("#btn_add", 'click',function () {
+    //     $.ajax({
+    //         url: "/api/user/",
+    //         async:true,
+    //         type:"POST",
+    //         dataType:"json",
+    //         cache:false,    //不允许缓存
+    //         data:$("#addForm").serialize(),
+    //         success: function(data){
+    //             if (data.code == 0) {
+    //                 layer.msg("添加成功", {icon: 1, time: 2000});
+    //             }else {
+    //                 layer.msg("操作失败", {icon: 2, time: 2000});
+    //             }
+    //             window.open("/user/list","_self");
+    //         },
+    //         error:function(data){
+    //             layer.msg("请求异常", {icon: 5, time: 1500});
+    //         }
+    //     });
+    // });
 
     // 表单验证
-    /* $("#addForm").validate({
-     debug: true,
-     rules: {
-     id: "required",
-     username: {
-     required: true
-     },
-     password: {
-     required: true
-     }
-     },
-     messages: {
-     id: "请输入编号",
-     username: {
-     required: "请输入用户名称"
-     },
-     password: {
-     required: "请输入密码"
-     }
-     },
-     submitHandler:function (form) {
-     form.submit();
-     }
-     });*/
+    $("#addForm").validate({
+         debug: true,
+         rules: {
+             username: {
+                required: true
+             }
+         },
+         messages: {
+             username: {
+                required: "请输入用户名称"
+             }
+         },
+         submitHandler:function (form) {
+            $(form).ajaxSubmit({
+
+            });
+         }
+     });
 });

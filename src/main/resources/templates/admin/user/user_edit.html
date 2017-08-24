@@ -34,11 +34,13 @@
                                         <input type="text" class="form-control" id="userNameEn" name="userNameEn" th:value="${sysUser.userNameEn}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="enabled">分配角色</label>
-                                        <select class="form-control" id="role" name="role">
+                                        <label for="role.id">分配角色</label>
+                                        <select class="form-control" name="role.id" id="role.id" th:field="${sysUser.role.id}">
                                             <option value="">--请选择--</option>
-                                            <option value="1">管理员</option>
-                                            <option value="0">普通用户</option>
+                                            <option th:each="role : ${roles}"
+                                                    th:value="${role.id}"
+                                                    th:text="${role.roleName}">
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

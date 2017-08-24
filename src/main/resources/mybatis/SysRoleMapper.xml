@@ -19,8 +19,20 @@
         WHERE sr.id = #{id}
     </select>
 
-    <!-- 根据登录名获取用户 -->
+    <!-- 获取所有的菜单列表 -->
+    <select id="getAllRoles" resultType="com.white.entity.system.SysRole">
+        <include refid="selectColumns"/>
+    </select>
+
+    <!-- 根据根据用户Id获取角色列表 -->
     <select id="getRolesByUserId" resultType="com.white.entity.system.SysRole">
+        <include refid="selectColumns" />
+        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+        WHERE sur.user_id = #{userId}
+    </select>
+
+    <!-- 根据根据用户Id获取角色 -->
+    <select id="getRoleByUserId" resultType="com.white.entity.system.SysRole">
         <include refid="selectColumns" />
         LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
         WHERE sur.user_id = #{userId}

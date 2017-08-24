@@ -16,21 +16,27 @@ import java.util.List;
  */
 public interface SystemService {
 
-    // 根据登录名获取用户
+    /** 根据登录名获取用户 */
     SysUser getUserByUserName(String username);
-    // 获取用户列表
-    List<SysUser> getAllUsers();
-    // 通过Id获取用户
+    /** 通过用户Id获取用户 */
     SysUser getUser(String id);
-    // 按条件查询用户信息并分页
+    /** 通过用户Id获取用户信息（包含角色信息）*/
+    SysUser getUserAndRole(String id);
+    /** 获取所有用户 */
+    List<SysUser> getAllUsers();
+    /** 按条件查询用户信息并分页 */
     List<SysUser> getUserListByCondition(SysUser sysUser);
-    // 添加用户
+    /** 添加用户 */
     void addUser(SysUser sysUser);
-    // 添加用户（包含文件）
+    /** 添加用户（更新用户表和用户--角色表）*/
+    void addUserAndRole(SysUser sysUser);
+    /** 添加用户（包含文件）*/
     void addUserIncludeFile(SysUser sysUser, MultipartFile file);
-    // 编辑用户
+    /** 更新用户 */
     void updateUser(SysUser sysUser);
-    // 删除用户
+    /** 更新用户（更新用户表和用户--角色表） */
+    void updateUserAndRole(SysUser sysUser);
+    /** 删除用户 */
     void deleteUser(String id);
 
     // 通过userId获取用户的菜单列表
@@ -54,6 +60,8 @@ public interface SystemService {
     List<SysRole> getRoleListByCondition(SysRole sysRole);
     //通过Id获取角色
     SysRole getRole(String id);
+    //获取所有角色
+    List<SysRole> getAllRoles();
     // 添加角色
     void addRole(SysRole sysRole);
     // 编辑角色

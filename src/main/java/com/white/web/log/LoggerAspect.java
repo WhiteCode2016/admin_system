@@ -76,8 +76,8 @@ public class LoggerAspect {
     }
 
     //获取返回的内容
-    @AfterReturning(returning = "object", pointcut = "controllerLog()")
+   /* @AfterReturning(returning = "object", pointcut = "controllerLog()")
     public void doAfterReturning(Object object) {
         logger.info("response={}", object.toString());
-    }
+    }*/
 }

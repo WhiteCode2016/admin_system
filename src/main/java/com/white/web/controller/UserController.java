@@ -2,6 +2,7 @@ package com.white.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.white.entity.system.SysRole;
 import com.white.entity.system.SysUser;
 import com.white.service.SystemService;
@@ -110,4 +111,8 @@ public class UserController extends BaseController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/icon/{id}", method = RequestMethod.GET)
+    public ModelAndView enterEditIcon(@PathVariable String id) {
+        return new ModelAndView("admin/user/user_icon");
+    }
 }

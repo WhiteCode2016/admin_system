@@ -115,11 +115,11 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public void addUserIncludeFile(SysUser sysUser, MultipartFile file) {
         sysUser.preInsert();
-        // 保存用户基本信息
+        // 保存用户信息到用户表
         sysUserMapper.insert(sysUser);
-        logger.info("======================="+sysUser.getId());
-        unifileUpload(file,sysUser.getId());
-
+        // 保存用户上传的文件到文件表
+        String userId = sysUser.getId();
+        unifileUpload(file,userId);
     }
 
     @Override

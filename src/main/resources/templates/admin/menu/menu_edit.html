@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}">
+
     <div class="content-wrapper">
         <section class="content-header">
             <h1>菜单修改</h1>
@@ -100,41 +101,7 @@
     </div>
     <!-- bootstrap datepicker -->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/bootstrap-datepicker.js}"></script>
-    <!-- bootstrap datepicker zh-CN-->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js}"></script>
-    <script type="text/javascript">
-        $(function () {
-            // 初始化datepicker
-            $(".datepicker").datepicker({
-                startDate: '-d',// 设置开始时间为当前日期
-                format:'yyyy/mm/dd',
-                language: 'zh-CN',
-                todayHighlight:true,
-                autoclose: true
-            });
-
-            // 编辑操作
-            $(document).delegate("#btn_edit", 'click',function () {
-                var id = $("#id").val();
-                $.ajax({
-                    url: "/api/menu/" + id,
-                    async:true,
-                    type:"POST",
-                    dataType:"json",
-                    cache:false,    //不允许缓存
-                    data:$("#editForm").serialize(),
-                    success: function(data){
-                        if (data.code == 0) {
-                            alert("添加成功");
-                        }else {
-                            alert("添加失败");
-                        }
-                    },
-                    error:function(data){
-                        alert("请求异常");
-                    }
-                });
-            });
-        });
-    </script>
+    <!-- 自定义JS-->
+    <script th:src="@{/static/system/menu/menu_edit.js}"></script>
 </html>

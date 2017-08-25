@@ -83,22 +83,7 @@ public class FileController {
         return "上传失败";
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ModelAndView getUser(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView();
-        SysFile sysFile = systemService.getFile(id);
-        modelAndView.addObject("sysFile",sysFile);
-        modelAndView.setViewName("admin/file/file_detail");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public JsonResult deleteMenu(@PathVariable String id) {
-        systemService.deleteFile(id);
-        return ResultUtil.success();
-    }
-
-    @RequestMapping(value="/listByPage", method= RequestMethod.POST)
+    @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
     public DataTablePage<SysFile> getListByPage(HttpServletRequest request, SysFile sysFile) {
         //使用DataTables的属性接收分页数据
         DataTablePage<SysFile> dataTable = new DataTablePage<SysFile>(request);
@@ -119,4 +104,21 @@ public class FileController {
         return dataTable;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public JsonResult deleteMenu(@PathVariable String id) {
+        systemService.deleteFile(id);
+        return ResultUtil.success();
+    }
+
+    /**
+     * View视图
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView enterEditFile(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        SysFile sysFile = systemService.getFile(id);
+        modelAndView.addObject("sysFile",sysFile);
+        modelAndView.setViewName("admin/file/file_detail");
+        return modelAndView;
+    }
 }

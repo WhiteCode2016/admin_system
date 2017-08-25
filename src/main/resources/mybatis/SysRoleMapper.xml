@@ -18,26 +18,6 @@
         <include refid="selectColumns"/>
         WHERE sr.id = #{id}
     </select>
-
-    <!-- 获取所有的菜单列表 -->
-    <select id="getAllRoles" resultType="com.white.entity.system.SysRole">
-        <include refid="selectColumns"/>
-    </select>
-
-    <!-- 根据根据用户Id获取角色列表 -->
-    <select id="getRolesByUserId" resultType="com.white.entity.system.SysRole">
-        <include refid="selectColumns" />
-        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
-        WHERE sur.user_id = #{userId}
-    </select>
-
-    <!-- 根据根据用户Id获取角色 -->
-    <select id="getRoleByUserId" resultType="com.white.entity.system.SysRole">
-        <include refid="selectColumns" />
-        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
-        WHERE sur.user_id = #{userId}
-    </select>
-
     <!-- 分页查询菜单信息 -->
     <select id="findList" resultType="com.white.entity.system.SysRole">
         <include refid="selectColumns"/>
@@ -49,26 +29,11 @@
             AND sr.enabled = #{enabled}
         </if>
     </select>
-
     <!-- 插入角色 -->
     <insert id="insert">
-        INSERT INTO sys_role (
-            id,
-            roleName,
-            enabled,
-            create_date,
-            update_date,
-            remarks
-        ) VALUES (
-            #{id},
-            #{roleName},
-            #{enabled},
-            #{createDate},
-            #{updateDate},
-            #{remarks}
-        )
+        INSERT INTO sys_role (id,roleName,enabled,create_date,update_date,remarks)
+        VALUES (#{id},#{roleName},#{enabled},#{createDate},#{updateDate},#{remarks})
     </insert>
-
     <!-- 更新角色 -->
     <update id="update">
         UPDATE sys_role
@@ -80,11 +45,28 @@
         </set>
         WHERE id = #{id}
     </update>
-
     <!-- 删除角色 -->
     <update id="deleteById">
         DELETE FROM sys_role
         WHERE id = #{id}
     </update>
+
+
+    <!-- 根据用户Id获取角色列表 -->
+    <select id="getRolesByUserId" resultType="com.white.entity.system.SysRole">
+        <include refid="selectColumns" />
+        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+        WHERE sur.user_id = #{userId}
+    </select>
+    <!-- 根据用户Id获取角色 -->
+    <select id="getRoleByUserId" resultType="com.white.entity.system.SysRole">
+        <include refid="selectColumns" />
+        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+        WHERE sur.user_id = #{userId}
+    </select>
+    <!-- 获取所有的角色列表 -->
+    <select id="getAllRoles" resultType="com.white.entity.system.SysRole">
+        <include refid="selectColumns"/>
+    </select>
 
 </mapper>

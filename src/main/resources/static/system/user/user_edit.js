@@ -20,13 +20,14 @@ $(function () {
             data:$("#editForm").serialize(),
             success: function(data){
                 if (data.code == 0) {
-                    alert("添加成功");
+                    layer.msg("编辑成功", {icon: 1, time: 2000});
                 }else {
-                    alert("添加失败");
+                    layer.msg("编辑失败", {icon: 2, time: 2000});
                 }
+                window.open("/api/user/list", "_self");
             },
             error:function(data){
-                alert("请求异常");
+                layer.msg("请求异常", {icon: 5, time: 1500});
             }
         });
     });

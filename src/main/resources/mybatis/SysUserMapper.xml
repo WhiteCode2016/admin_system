@@ -65,11 +65,6 @@
         DELETE FROM sys_user WHERE id = #{id}
     </delete>
 
-    <!--
-        ##############################################################################
-                                        自定义函数实现
-        ##############################################################################
-    -->
 
     <!-- 根据登录名获取用户 -->
     <select id="getUserByUserName" resultType="SysUser">
@@ -91,4 +86,5 @@
     <delete id="deleteRoleByUserId">
         DELETE FROM sys_user_role WHERE user_id = #{userId}
     </delete>
+
 </mapper>

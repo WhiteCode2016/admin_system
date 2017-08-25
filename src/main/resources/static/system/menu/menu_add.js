@@ -12,42 +12,24 @@ $(function () {
 
     // 添加操作
     $(document).delegate("#btn_add", 'click',function () {
-       /* if (!$("#addForm").valid()) {
-            return;
-        }*/
         $.ajax({
-            url: "/api/user/",
-            async: true,
-            type: "POST",
-            dataType: "json",
-            cache: false,    //不允许缓存
-            data: $("#addForm").serialize(),
-            success: function (data) {
+            url: "/api/menu/",
+            async:true,
+            type:"POST",
+            dataType:"json",
+            cache:false,    //不允许缓存
+            data:$("#addForm").serialize(),
+            success: function(data){
                 if (data.code == 0) {
                     layer.msg("添加成功", {icon: 1, time: 2000});
                 } else {
                     layer.msg("操作失败", {icon: 2, time: 2000});
                 }
-                window.open("/api/user/list", "_self");
+                window.open("/api/menu/list", "_self");
             },
-            error: function (data) {
+            error:function(data){
                 layer.msg("请求异常", {icon: 5, time: 1500});
             }
         });
     });
-
-    // 表单验证
-   /* $("#addForm").validate({
-        debug: true,
-        rules: {
-            username: {
-                required: true
-            }
-        },
-        messages: {
-            username: {
-                required: "请输入用户名称"
-            }
-        }
-    });*/
 });

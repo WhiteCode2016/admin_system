@@ -26,7 +26,7 @@
             </div>
         </form>
         <!-- 侧边栏菜单列表 -->
-        <!--<ul class="sidebar-menu">
+        <ul class="sidebar-menu">
             <li class="header">导航</li>
             <li class="active treeview">
                 <a href="#">
@@ -44,8 +44,8 @@
 		                	</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a th:href="@{/user/list}"><i class="fa fa-circle-o"></i> 用户查询</a></li>
-                            <li><a th:href="@{/user/add}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
+                            <li><a th:href="@{/api/user/list}"><i class="fa fa-circle-o"></i> 用户查询</a></li>
+                            <li><a th:href="@{/api/user/add}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
                         </ul>
                     </li>
                     <li>
@@ -55,8 +55,8 @@
 		                	</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a th:href="@{/role/list}"><i class="fa fa-circle-o"></i> 角色查询</a></li>
-                            <li><a th:href="@{/role/add}"><i class="fa fa-circle-o"></i> 角色添加</a></li>
+                            <li><a th:href="@{/api/role/list}"><i class="fa fa-circle-o"></i> 角色查询</a></li>
+                            <li><a th:href="@{/api/role/add}"><i class="fa fa-circle-o"></i> 角色添加</a></li>
                         </ul>
                     </li>
                     <li>
@@ -66,8 +66,8 @@
 		                	</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a th:href="@{/menu/list}"><i class="fa fa-circle-o"></i> 菜单查询</a></li>
-                            <li><a th:href="@{/menu/add}"><i class="fa fa-circle-o"></i> 菜单添加</a></li>
+                            <li><a th:href="@{/api/menu/list}"><i class="fa fa-circle-o"></i> 菜单查询</a></li>
+                            <li><a th:href="@{/api/menu/add}"><i class="fa fa-circle-o"></i> 菜单添加</a></li>
                         </ul>
                     </li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> 日志管理</a></li>
@@ -91,9 +91,9 @@
             <li><a href="#"><i class="fa fa-book"></i> <span>系统介绍</span></a></li>
             <li class="header">链接</li>
             <li><a href="https://github.com/WhiteCode2016"><i class="fa fa-link text-red"></i> <span>Github.WhiteCode2016</span></a></li>
-        </ul>-->
+        </ul>
 
-        <ul class="sidebar-menu">
+        <!--<ul class="sidebar-menu">
             <li class="header">导航</li>
             <li class="active treeview" sec:authorize="isAuthenticated()"
                 th:if="${!#authentication.principal.menus.empty}"
@@ -101,7 +101,7 @@
                 <a th:href="${menu.href}">
                     <i th:class="${menu.icon}"></i>
                     <span th:text="${menu.menuName}">系统管理</span>
-                    <!-- 如果没有子菜单，就隐藏下拉按钮 -->
+                    &lt;!&ndash; 如果没有子菜单，就隐藏下拉按钮 &ndash;&gt;
                     <span class="pull-right-container" th:if="${!menu.children.empty}">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -117,6 +117,6 @@
             <li><a href="#"><i class="fa fa-book"></i> <span>系统介绍</span></a></li>
             <li class="header">链接</li>
             <li><a href="https://github.com/WhiteCode2016"><i class="fa fa-github-square text-red"></i> <span>Github.WhiteCode2016</span></a></li>
-        </ul>
+        </ul>-->
     </section>
 </aside>

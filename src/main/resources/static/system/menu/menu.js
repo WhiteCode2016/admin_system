@@ -9,7 +9,6 @@ $(document).ready(function () {
         "autoWidth": false,    //开启自适应宽度
         "processing": true,
         "serverSide": true,
-        // "dom": "<l<\'#topPlugin\'>f>rt<ip><'clear'>",
         "language": {
             "url": "/static/AdminLTE-2.3.11/plugins/datatables/i18n/Chinese.json"
         },
@@ -37,9 +36,9 @@ $(document).ready(function () {
                 "data": "show" ,
                 "render" : function(data, type, row, meta) {
                     if(data == 1){
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+">显示</a>";
+                        data ="<span class='label label-primary'>显示</span>";
                     }else{
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+"><font color='red'>不显示</font></a>";
+                        data ="<span class='label label-primary'>不显示</span>";
                     }
                     return	 data;
                 }
@@ -53,29 +52,17 @@ $(document).ready(function () {
                         '<button class="btn btn-primary btn-xs" id="detailOne" title="详情" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
                 }
             }
-        ],
-        // initComplete:initComplete
+        ]
     });
-
-    //表格加载渲染完毕，加载功能按钮
-    function initComplete(){
-        //功能按钮
-        var topPlugin = '<button class="btn btn-primary btn-sm" id="addOne" >新 增</button> ' +
-            '<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>' ;
-        //在表格上方topPlugin DIV中追加HTML
-        $("#topPlugin").append(topPlugin);
-    }
-
 
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
-        // $('#addOneModal').modal('show');
         window.open("/menu/add","_self");
     });
     // 打开编辑页面
     $(document).delegate('#editOne','click',function() {
         var id=$(this).data("id");
-        window.open("/api/menu/" + id,"_self");
+        window.open("/api/menu/edit/" + id,"_self");
     });
     // 打开详情页面
     $(document).delegate('#detailOne','click',function() {
@@ -109,13 +96,16 @@ $(document).ready(function () {
                 dataType:"json",
                 cache:false,    //不允许缓存
                 success: function(data) {
-                    layer.msg(data.message, {time: 2000},function(){
-                        table.ajax.reload();
-                        layer.close(index);
-                    });
+                    if (data.code == 0) {
+                        layer.msg("删除成功", {icon: 1, time: 2000});
+                    }else {
+                        layer.msg("删除失败", {icon: 2, time: 2000});
+                    }
+                    table.ajax.reload();
+                    layer.close(index);
                 },
                 error: function () {
-                    layer.msg("数据异常", {time: 2000},function(){
+                    layer.msg("数据异常", {time: 1500},function(){
                         layer.close(index);
                     });
                 }

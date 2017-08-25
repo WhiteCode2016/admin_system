@@ -18,15 +18,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class UserController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private SystemService systemService;
 
-    @RequestMapping(value="/", method=RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public JsonResult addUser(SysUser sysUser) {
-//        systemService.addUserAndRole(sysUser);
+        systemService.addUserAndRole(sysUser);
         return ResultUtil.success();
     }
 
@@ -36,13 +36,13 @@ public class UserController {
         return ResultUtil.success();
     }*/
 
-    @RequestMapping(value="/{id}", method=RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public JsonResult updateUser(@PathVariable String id, SysUser sysUser) {
         systemService.updateUserAndRole(sysUser);
         return ResultUtil.success();
     }
 
-    @RequestMapping(value="/listByPage", method= RequestMethod.POST)
+    @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
     public DataTablePage<SysUser> getListByPage(HttpServletRequest request,SysUser sysUser) {
         //使用DataTables的属性接收分页数据
         DataTablePage<SysUser> dataTable = new DataTablePage<SysUser>(request);
@@ -63,16 +63,21 @@ public class UserController {
         return dataTable;
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public String deleteUser(@PathVariable String id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public JsonResult deleteUser(@PathVariable String id) {
         systemService.deleteUser(id);
-        return "success";
+        return ResultUtil.success();
     }
 
     /**
      * View视图
      */
-    @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView enterListUser() {
+        return new ModelAndView("admin/user/user_list");
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView enterEditUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         // 获取用户的信息
@@ -85,7 +90,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/add", method=RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView enterAddUser() {
         ModelAndView modelAndView = new ModelAndView();
         // 获取角色列表动态显示
@@ -95,7 +100,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public ModelAndView getUserDetail(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         // 获取用户的信息

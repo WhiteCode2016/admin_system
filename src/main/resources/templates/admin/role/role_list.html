@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datatables/dataTables.bootstrap.css}">
     <style type="text/css">
@@ -8,6 +8,7 @@
             margin-left: 10px;
         }
     </style>
+
     <div class="content-wrapper">
         <section class="content-header">
             <h1>角色查询</h1>
@@ -55,7 +56,6 @@
                             <table id="dataTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <!--<th><input type="checkbox" name="allChecked" /></th>-->
                                         <th>编号</th>
                                         <th>角色名称</th>
                                         <th>是否可用</th>
@@ -69,59 +69,6 @@
                 </div>
             </div>
         </section>
-    </div>
-    <!--单个删除确认对话框-->
-    <div class="modal fade" id="deleteOneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-        <form class="form-horizontal" role="form">
-            <div class="modal-dialog modal-sm " >
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">提示信息</h4>
-                    </div>
-                    <div class="modal-body" style="text-align: left;">
-                        <h5>您确定要删除当前信息吗？</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" id="delSubmit">确认</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!-- 编辑状态弹框 -->
-    <div class="modal fade" id="editOneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        编辑用户状态 &nbsp;&nbsp;<span id="titleId"></span>
-                    </h4>
-                </div>
-                <form class="form-horizontal" action="" method="post"  >
-                    <div class="modal-body ">
-                        <div class="form-group">
-                            <input type="hidden" id="id" name="id" />
-                            <label class="col-sm-4 control-label">用户状态：</label>
-                            <div class="col-sm-5">
-                                <select class="form-control">
-                                    <option value="">--请选择角色是否显示--</option>
-                                    <option value="1">显示</option>
-                                    <option value="0">不显示</option>
-                                </select>
-                            </div>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-sm btn-primary" >确定</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 
     <!-- DataTables -->

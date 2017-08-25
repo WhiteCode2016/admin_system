@@ -3,7 +3,7 @@
 <mapper namespace="com.white.mapper.SysFileMapper">
 
     <sql id="selectColumns">
-      SELECT DISTINCT
+      SELECT
             sf.id,
             sf.original_file_name,
             sf.suffix,
@@ -13,40 +13,23 @@
         FROM sys_file sf
     </sql>
 
-    <!-- 分页查询菜单信息 -->
+    <!-- 根据Id获取文件 -->
+    <select id="get" resultType="com.white.entity.system.SysFile">
+        <include refid="selectColumns"/>
+        WHERE sf.id = #{id}
+    </select>
+    <!-- 分页查询文件信息 -->
     <select id="findList" resultType="com.white.entity.system.SysFile">
         <include refid="selectColumns"/>
         <if test="suffix != null and suffix != ''">
             WHERE sf.suffix = #{suffix}
         </if>
     </select>
-
-    <!-- 根据Id获取文件 -->
-    <select id="get" resultType="com.white.entity.system.SysFile">
-        <include refid="selectColumns"/>
-        WHERE sf.id = #{id}
-    </select>
-
-    <!-- 添加一个菜单 -->
+    <!-- 添加一个文件 -->
     <insert id="insert">
-        INSERT INTO sys_file
-            (
-                id,
-                original_file_name,
-                suffix,
-                size,
-                content_type,
-                userId
-            ) VALUES (
-                #{id},
-                #{originalFileName},
-                #{suffix},
-                #{size},
-                #{contentType},
-                #{userId}
-            )
+        INSERT INTO sys_file(id,original_file_name,suffix,size,content_type,userId)
+        VALUES ( #{id},#{originalFileName},#{suffix},#{size},#{contentType},#{userId})
     </insert>
-
     <!-- 删除文件 -->
     <delete id="deleteById">
         DELETE FROM sys_file

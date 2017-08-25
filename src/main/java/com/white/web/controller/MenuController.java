@@ -2,6 +2,7 @@ package com.white.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.white.entity.system.SysMenu;
 import com.white.service.SystemService;
 import com.white.util.DataTablePage;
@@ -29,36 +30,9 @@ public class MenuController {
         return ResultUtil.success();
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ModelAndView getUser(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView();
-        SysMenu sysMenu = systemService.getMenu(id);
-        List<SysMenu> sysMenuParents = systemService.getAllMenus();
-        modelAndView.addObject("sysMenu",sysMenu);
-        modelAndView.addObject("sysMenuParents",sysMenuParents);
-        modelAndView.setViewName("admin/menu/menu_edit");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
-    public ModelAndView getMenuDetail(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView();
-        SysMenu sysMenu = systemService.getMenu(id);
-        modelAndView.addObject("sysMenu",sysMenu);
-        modelAndView.setViewName("admin/menu/menu_detail");
-        return modelAndView;
-    }
-
-
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public JsonResult<SysMenu> updateMenu(@ModelAttribute SysMenu sysMenu) {
+    public JsonResult updateMenu(SysMenu sysMenu) {
         systemService.update(sysMenu);
-        return ResultUtil.success();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public JsonResult<SysMenu> deleteMenu(@PathVariable String id) {
-        systemService.deleteMenu(id);
         return ResultUtil.success();
     }
 
@@ -83,6 +57,12 @@ public class MenuController {
         return dataTable;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public JsonResult deleteMenu(@PathVariable String id) {
+        systemService.deleteMenu(id);
+        return ResultUtil.success();
+    }
+
     @RequestMapping(value="/getAllMenus", method = RequestMethod.POST)
     public List<SysMenu> getAllMenus() {
         return systemService.getAllMenus();
@@ -93,11 +73,40 @@ public class MenuController {
         return systemService.getMenusByRoleId(id);
     }
 
-    @RequestMapping(value="/getMenuTree/{id}", method=RequestMethod.GET)
+    /**
+     * View视图
+     */
+    @RequestMapping(value="/list", method=RequestMethod.GET)
+    public ModelAndView enterListMenu() {
+        return new ModelAndView("admin/menu/menu_list");
+    }
+
+    @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+    public ModelAndView enterEditMenu(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        SysMenu sysMenu = systemService.getMenu(id);
+        List<SysMenu> sysMenuParents = systemService.getAllMenus();
+        modelAndView.addObject("sysMenu",sysMenu);
+        modelAndView.addObject("sysMenuParents",sysMenuParents);
+        modelAndView.setViewName("admin/menu/menu_edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
+    public ModelAndView enterDetaiMenu(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        SysMenu sysMenu = systemService.getMenu(id);
+        modelAndView.addObject("sysMenu",sysMenu);
+        modelAndView.setViewName("admin/menu/menu_detail");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/menuTree/{id}", method=RequestMethod.GET)
     public ModelAndView getMenuTree(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("id",id);
         modelAndView.setViewName("admin/menu/menu_tree");
         return modelAndView;
     }
+
 }

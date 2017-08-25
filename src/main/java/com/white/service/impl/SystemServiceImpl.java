@@ -201,6 +201,18 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
+    public SysRole getRoleAndMenu(String id) {
+        // 通过Id角色表中的角色信息
+        SysRole sysRole = getRole(id);
+        // 通过roleId获取该角色的菜单列表
+        String roleId = sysRole.getId();
+        List<SysMenu> sysMenus = sysMenuMapper.getMenusByRoleId(roleId);
+        // 将菜单信息放入到角色信息中
+        sysRole.setMenus(sysMenus);
+        return sysRole;
+    }
+
+    @Override
     public List<SysRole> getAllRoles() {
         return sysRoleMapper.getAllRoles();
     }

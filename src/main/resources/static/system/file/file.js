@@ -32,7 +32,7 @@ $(document).ready(function () {
                         '<button class="btn btn-primary btn-xs" id="detailOne" title="详情" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
                 }
             }
-        ],
+        ]
     });
 
     // 打开详情页面
@@ -45,7 +45,7 @@ $(document).ready(function () {
             shade: 0.8,
             maxmin: true, //开启最大化最小化按钮
             area: ['600px', '380px'],
-            content: '/api/file/' + id
+            content: '/api/file/edit/' + id
         });
     });
     // 重置查询条件
@@ -67,13 +67,16 @@ $(document).ready(function () {
                 dataType:"json",
                 cache:false,    //不允许缓存
                 success: function(data) {
-                    layer.msg(data.message, {time: 2000},function(){
-                        table.ajax.reload();
-                        layer.close(index);
-                    });
+                    if (data.code == 0) {
+                        layer.msg("删除成功", {icon: 1, time: 2000});
+                    }else {
+                        layer.msg("删除失败", {icon: 2, time: 2000});
+                    }
+                    table.ajax.reload();
+                    layer.close(index);
                 },
                 error: function () {
-                    layer.msg("数据异常", {time: 2000},function(){
+                    layer.msg("数据异常", {time: 1500},function(){
                         layer.close(index);
                     });
                 }

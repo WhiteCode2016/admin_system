@@ -56,17 +56,19 @@ public interface SystemService {
     // 通过Id获取菜单
     SysMenu getMenu(String id);
 
-    // 按条件查询角色信息并分页
+    /** 按条件查询角色信息并分页 */
     List<SysRole> getRoleListByCondition(SysRole sysRole);
-    //通过Id获取角色
+    /** 通过Id获取角色 */
     SysRole getRole(String id);
-    //获取所有角色
+    /** 通过Id获取角色（包含菜单列表）*/
+    SysRole getRoleAndMenu(String id);
+    /** 获取所有角色 */
     List<SysRole> getAllRoles();
-    // 添加角色
+    /** 添加角色 */
     void addRole(SysRole sysRole);
-    // 编辑角色
+    /** 编辑角色 */
     void updateRole(SysRole sysRole);
-    // 删除角色
+    /** 删除角色 */
     void deleteRole(String id);
 
     // 按条件查询文件信息并分页

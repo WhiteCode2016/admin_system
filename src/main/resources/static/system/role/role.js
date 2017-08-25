@@ -14,7 +14,6 @@ $(document).ready(function () {
             "url": "/static/AdminLTE-2.3.11/plugins/datatables/i18n/Chinese.json"
         },
         "ajax": {
-            // "url": "/static/objects.txt",
             "url": "/api/role/listByPage",
             "type": "POST",
             "data": function (d) {
@@ -29,9 +28,9 @@ $(document).ready(function () {
                 "data": "enabled" ,
                 "render" : function(data, type, row, meta) {
                     if(data == 1){
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+">显示</a>";
+                        data ="<span class='label label-primary'>显示</span>";
                     }else{
-                        data ="<a href='#' class='upOrderStatus' data-id="+row.id+"><font color='red'>不显示</font></a>";
+                        data ="<span class='label label-primary'>不显示</span>";
                     }
                     return	 data;
                 }
@@ -40,8 +39,6 @@ $(document).ready(function () {
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                   /* return	data='<button id="deleteOne" class="btn btn-danger btn-xs" data-id='+ row.id +'>删 除</button> ' +
-                        '<button id="editOne" class="btn btn-success btn-xs" data-id='+ row.id +'>编 辑</button>';*/
                     return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
                         '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
                         '<button class="btn btn-primary btn-xs" id="editMneuTree"  data-id='+ row.id +'><i class="fa fa-th-list"></i></button> ';
@@ -54,61 +51,30 @@ $(document).ready(function () {
     //表格加载渲染完毕，加载功能按钮
     function initComplete(){
         //功能按钮
-      /*  var topPlugin = '<button class="btn btn-primary btn-sm" id="addOne" >新 增</button> ' +
-            '<button class="btn btn-primary btn-sm" id="reset">重置搜索条件</button>' ;*/
-      var topPlugin = '<div class="btn-group"> ' +
-          '<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button> ' +
-          '<ul class="dropdown-menu " role="menu"> ' +
-          '<li><a href="#" id="excel"> <img src="icons/xls.png" width="24px"> XLS</a></li> ' +
-        '<li><a href="#"> <img src="icons/pdf.png" width="24px"> PDF</a></li> ' +
-        '</ul> ' +
-        '</div>';
+        var topPlugin = '<div class="btn-group"> ' +
+            '<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button> ' +
+            '<ul class="dropdown-menu " role="menu"> ' +
+            '<li><a href="#" id="excel"> <img src="icons/xls.png" width="24px"> XLS</a></li> ' +
+            '<li><a href="#"> <img src="icons/pdf.png" width="24px"> PDF</a></li> ' +
+            '</ul> ' +
+            '</div>';
         //在表格上方topPlugin DIV中追加HTML
         $("#topPlugin").append(topPlugin);
     }
 
-    //单行删除按钮点击事件响应
-    $(document).delegate('#deleteOne','click',function() {
-        var id = $(this).data("id");
-        $("#delSubmit").val(id);
-        $("#deleteOneModal").modal('show');
-    });
-
-    //点击确认删除按钮
-    $(document).delegate('#delSubmit','click',function(){
-        var id=$(this).val();
-        $('#deleteOneModal').modal('hide');
-        $.ajax({
-            url: "/api/role/" + id,
-            async:true,
-            type:"DELETE",
-            dataType:"json",
-            cache:false,    //不允许缓存
-            success: function(data){
-                if(data.code == 0) {
-                    window.location.reload();
-                } else {
-                    alert("删除失败");
-                }
-            },
-            error:function(data){
-                alert("请求异常");
-            }
-        });
-    });
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
-        window.open("/role/add","_self");
+        window.open("/api/role/add","_self");
     });
     // 打开编辑页面
     $(document).delegate('#editOne','click',function() {
         var id=$(this).data("id");
-        window.open("/api/role/" + id,"_self");
+        window.open("/api/role/edit/" + id,"_self");
     });
     // 打开编辑菜单树页面
     $(document).delegate('#editMneuTree','click',function() {
         var id=$(this).data("id");
-        window.open("/api/menu/getMenuTree/" + id,"_self");
+        window.open("/api/menu/menuTree/" + id,"_self");
     });
     // 重置查询条件
     $(document).delegate('#reset','click',function() {
@@ -119,7 +85,34 @@ $(document).ready(function () {
     $(document).delegate('#search','click',function() {
         table.ajax.reload();
     });
-
+    //单行删除操作
+    $(document).delegate('#deleteOne','click',function() {
+        var id = $(this).data("id");
+        layer.confirm('您确定要删除当前信息吗？', {icon: 3, title:'提示信息'}, function(index) {
+            $.ajax({
+                url: "/api/role/" + id,
+                async: true,
+                type: "DELETE",
+                dataType: "json",
+                cache: false,    //不允许缓存
+                success: function(data) {
+                    if (data.code == 0) {
+                        layer.msg("删除成功", {icon: 1, time: 2000});
+                    }else {
+                        layer.msg("删除失败", {icon: 2, time: 2000});
+                    }
+                    table.ajax.reload();
+                    layer.close(index);
+                },
+                error: function () {
+                    layer.msg("数据异常", {time: 1500},function(){
+                        layer.close(index);
+                    });
+                }
+            });
+        });
+    });
+    //功能按钮操作
     $(document).delegate('#excel','click',function() {
         $('#dataTable').tableExport({
             fileName: '角色信息表',
@@ -128,6 +121,5 @@ $(document).ready(function () {
             escape:'false'
         });
     });
-
 
 });

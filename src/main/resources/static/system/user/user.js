@@ -50,7 +50,7 @@ $(document).ready(function () {
 
     // 打开添加页面
     $(document).delegate('#addOne','click',function() {
-        window.open("/user/add","_self");
+        window.open("/api/user/add","_self");
     });
     // 打开编辑页面
     $(document).delegate('#editOne','click',function() {
@@ -90,10 +90,13 @@ $(document).ready(function () {
                 dataType: "json",
                 cache: false,    //不允许缓存
                 success: function(data) {
-                    layer.msg(data.message, {time: 1500},function(){
-                        table.ajax.reload();
-                        layer.close(index);
-                    });
+                    if (data.code == 0) {
+                        layer.msg("删除成功", {icon: 1, time: 2000});
+                    }else {
+                        layer.msg("删除失败", {icon: 2, time: 2000});
+                    }
+                    table.ajax.reload();
+                    layer.close(index);
                 },
                 error: function () {
                     layer.msg("数据异常", {time: 1500},function(){

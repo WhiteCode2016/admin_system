@@ -3,7 +3,7 @@
 <mapper namespace="com.white.mapper.SysMenuMapper">
 
     <sql id="selectColumns">
-      SELECT DISTINCT
+      SELECT
             sm.id,
             sm.parent_id,
             sm.parent_ids,
@@ -17,28 +17,11 @@
         FROM sys_menu sm
     </sql>
 
-    <!-- 通过userId获取用户的菜单列表 -->
-    <select id="getMenusByUserId" resultType="com.white.entity.system.SysMenu">
+    <!-- 通过Id获取菜单 -->
+    <select id="get" resultType="com.white.entity.system.SysMenu">
         <include refid="selectColumns"/>
-        JOIN sys_role_menu srm ON srm.menu_id = sm.id
-        JOIN sys_role sr ON sr.id = srm.role_id
-        JOIN sys_user_role sur ON sur.role_id = sr.id
-        JOIN sys_user su ON su.id = sur.user_id
-        WHERE su.id = #{userId}
+        WHERE sm.id = #{id}
     </select>
-
-    <!-- 通过userId获取用户的菜单列表 -->
-    <select id="getMenusByRoleId" resultType="com.white.entity.system.SysMenu">
-        <include refid="selectColumns"/>
-        JOIN sys_role_menu srm ON srm.menu_id = sm.id
-        WHERE srm.role_id = #{roleId}
-    </select>
-
-    <!-- 获取所有的菜单列表 -->
-    <select id="getAllMenus" resultType="com.white.entity.system.SysMenu">
-        <include refid="selectColumns"/> WHERE sm.del_flag = '0'
-    </select>
-
     <!-- 分页查询菜单信息 -->
     <select id="findList" resultType="com.white.entity.system.SysMenu">
         <include refid="selectColumns"/>
@@ -50,37 +33,11 @@
             AND sm.show = #{show}
         </if>
     </select>
-
     <!-- 添加一个菜单 -->
     <insert id="insert">
-        INSERT INTO sys_menu
-            (
-                id,
-                parent_id,
-                menuName,
-                href,
-                icon,
-                sort,
-                is_show,
-                remarks
-            ) VALUES (
-                #{id},
-                #{parentId},
-                #{menuName},
-                #{href},
-                #{icon},
-                #{sort},
-                #{isShow},
-                #{remarks}
-            )
+        INSERT INTO sys_menu(id,parent_id,menuName,href,icon,sort,is_show,remarks)
+        VALUES (#{id},#{parentId},#{menuName},#{href},#{icon},#{sort},#{isShow},#{remarks})
     </insert>
-
-    <!-- 通过Id获取菜单 -->
-    <select id="get" resultType="com.white.entity.system.SysMenu">
-        <include refid="selectColumns"/>
-        WHERE sm.id = #{id}
-    </select>
-
     <!-- 编辑菜单 -->
     <update id="update">
         UPDATE sys_menu
@@ -95,7 +52,6 @@
         </set>
         WHERE id = #{id}
     </update>
-
     <!-- 删除菜单 -->
     <update id="deleteById">
         UPDATE sys_menu
@@ -103,13 +59,25 @@
         WHERE id = #{id}
     </update>
 
-   <!-- <select id="getJSTreeMenu" resultType="com.white.util.JsTreeMenu">
-        SELECT
-            id "id",
-            parent_id "parent",
-            menuName "text",
-            icon "icon"
-        FROM sys_menu
-    </select>-->
+
+    <!-- 通过userId获取用户的菜单列表 -->
+    <select id="getMenusByUserId" resultType="com.white.entity.system.SysMenu">
+        <include refid="selectColumns"/>
+        JOIN sys_role_menu srm ON srm.menu_id = sm.id
+        JOIN sys_role sr ON sr.id = srm.role_id
+        JOIN sys_user_role sur ON sur.role_id = sr.id
+        JOIN sys_user su ON su.id = sur.user_id
+        WHERE su.id = #{userId}
+    </select>
+    <!-- 通过userId获取用户的菜单列表 -->
+    <select id="getMenusByRoleId" resultType="com.white.entity.system.SysMenu">
+        <include refid="selectColumns"/>
+        JOIN sys_role_menu srm ON srm.menu_id = sm.id
+        WHERE srm.role_id = #{roleId}
+    </select>
+    <!-- 获取所有的菜单列表 -->
+    <select id="getAllMenus" resultType="com.white.entity.system.SysMenu">
+        <include refid="selectColumns"/> WHERE sm.del_flag = '0'
+    </select>
 
 </mapper>

@@ -16,10 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * Created by White on 2017/8/3.
- */
-
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
@@ -29,39 +25,18 @@ public class RoleController {
     private SystemService systemService;
 
     @RequestMapping(value="/", method=RequestMethod.POST)
-    public JsonResult<Object> postUser(@ModelAttribute SysRole sysRole) {
-        // 处理"/api/role/"的POST请求，用来创建User
-        // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
+    public JsonResult addRole(SysRole sysRole) {
         systemService.addRole(sysRole);
         return ResultUtil.success();
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ModelAndView getUser(@PathVariable String id) {
-        // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
-        // url中的id可通过@PathVariable绑定到函数的参数中
-        ModelAndView modelAndView = new ModelAndView();
-        SysRole sysRole = systemService.getRole(id);
-        modelAndView.addObject("sysRole",sysRole);
-        modelAndView.setViewName("admin/role/role_edit");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public JsonResult<Object> putUser1(@PathVariable String id, @ModelAttribute SysRole sysRole) {
-        // 处理"/users/{id}"的PUT请求，用来更新User信息
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public JsonResult updateRole(@PathVariable String id, SysRole sysRole) {
         systemService.updateRole(sysRole);
         return ResultUtil.success();
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public JsonResult<Object> deleteUser(@PathVariable String id) {
-        // 处理"/users/{id}"的DELETE请求，用来删除User
-        systemService.deleteRole(id);
-        return ResultUtil.success();
-    }
-
-    @RequestMapping(value="/listByPage", method= RequestMethod.POST)
+    @RequestMapping(value = "/listByPage", method = RequestMethod.POST)
     public DataTablePage<SysRole> getListByPage(HttpServletRequest request,SysRole sysRole) {
         //使用DataTables的属性接收分页数据
         DataTablePage<SysRole> dataTable = new DataTablePage<SysRole>(request);
@@ -80,5 +55,36 @@ public class RoleController {
 
         //返回数据到页面
         return dataTable;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public JsonResult deleteRole(@PathVariable String id) {
+        systemService.deleteRole(id);
+        return ResultUtil.success();
+    }
+
+    /**
+     * View视图
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView enterListRole() {
+        return new ModelAndView("admin/role/role_list");
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView enterEditRole(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        // 获取角色信息
+        SysRole sysRole = systemService.getRoleAndMenu(id);
+        modelAndView.addObject("sysRole",sysRole);
+        modelAndView.setViewName("admin/role/role_edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public ModelAndView enterAddRole() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/role/role_add");
+        return modelAndView;
     }
 }

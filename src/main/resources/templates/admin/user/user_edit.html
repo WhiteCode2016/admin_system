@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}">
+    <!-- bootstrap fileinput -->
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/fileinput/css/fileinput.min.css}">
     <div class="content-wrapper">
         <section class="content-header">
             <h1>用户修改</h1>
@@ -17,7 +19,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">用户修改</h3>
                         </div>
-                        <form role="form" th:action="@{/api/user/}" method="put" id="editForm">
+                        <form role="form" th:action="@{/api/user/}" method="put" id="editForm" enctype="multipart/form-data" >
                             <div class="box-body">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -76,6 +78,12 @@
                                         </div>
                                     </div>
                                 </div>
+                               <!-- <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="icon">图片上传:</label>
+                                        <input id="icon" name="file" type="file" multiple="true" class="file-loading" />
+                                    </div>
+                                </div>-->
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="remarks">备注</label>
@@ -95,6 +103,11 @@
     <!-- bootstrap datepicker -->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/bootstrap-datepicker.js}"></script>
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js}"></script>
+    <!-- bootstrap fileinput -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/fileinput/js/fileinput.min.js}"></script>
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/fileinput/js/locales/zh.js}"></script>
+    <!-- layer -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/layer/layer.js}"></script>
     <!-- 自定义JS-->
     <script th:src="@{/static/system/user/user_edit.js}"></script>
 </html>

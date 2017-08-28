@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,15 +32,21 @@ public class UserController extends BaseController {
         return ResultUtil.success();
     }
 
-   /* @RequestMapping(value="/", method=RequestMethod.POST)
-    public JsonResult<Object> postUser(@ModelAttribute SysUser sysUser, MultipartFile file) {
-        systemService.addUserIncludeFile(sysUser,file);
+    @RequestMapping(value="/{id}", method=RequestMethod.POST)
+    public JsonResult updateUserAndFile(@PathVariable String id, SysUser sysUser, MultipartFile file) {
+        systemService.updateUserAndRoleAndFile(sysUser,file);
+        return ResultUtil.success();
+    }
+
+    /*@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public JsonResult updateUser(@PathVariable String id, SysUser sysUser) {
+        systemService.updateUserAndRole(sysUser);
         return ResultUtil.success();
     }*/
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public JsonResult updateUser(@PathVariable String id, SysUser sysUser) {
-        systemService.updateUserAndRole(sysUser);
+    @RequestMapping(value = "/icon/{id}", method = RequestMethod.POST)
+    public JsonResult updateEditIcon(@PathVariable String id, MultipartFile file) {
+        systemService.updateFile(id,file);
         return ResultUtil.success();
     }
 
@@ -113,6 +120,10 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/icon/{id}", method = RequestMethod.GET)
     public ModelAndView enterEditIcon(@PathVariable String id) {
-        return new ModelAndView("admin/user/user_icon");
+        ModelAndView modelAndView = new ModelAndView();
+        SysUser sysUser = systemService.getUser(id);
+        modelAndView.addObject("sysUser",sysUser);
+        modelAndView.setViewName("admin/user/user_icon");
+        return modelAndView;
     }
 }

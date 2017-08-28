@@ -36,6 +36,7 @@ public interface SystemService {
     void updateUser(SysUser sysUser);
     /** 更新用户（更新用户表和用户--角色表） */
     void updateUserAndRole(SysUser sysUser);
+    void updateUserAndRoleAndFile(SysUser sysUser, MultipartFile file);
     /** 删除用户 */
     void deleteUser(String id);
 
@@ -77,6 +78,8 @@ public interface SystemService {
     SysFile getFile(String id);
     // 删除文件
     void deleteFile(String id);
+
+    void updateFile(String userId, MultipartFile file);
 
 
 }

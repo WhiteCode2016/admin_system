@@ -36,4 +36,10 @@
         WHERE id = #{id}
     </delete>
 
+
+    <!-- 根据userId删除用户的文件信息 -->
+    <delete id="deleteByUserId">
+        DELETE FROM sys_file
+        WHERE userId = #{userId}
+    </delete>
 </mapper>

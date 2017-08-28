@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout_v1 :: layout_v1(_,~{::link},~{::div},~{::script})">
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css}"/>
+    <!-- bootstrap fileinput -->
+    <link rel="stylesheet" th:href="@{/static/AdminLTE-2.3.11/plugins/fileinput/css/fileinput.min.css}">
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>编辑图像</h1>
+            <h1>图像上传</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
-                <li class="active">编辑图像</li>
+                <li class="active">图像上传</li>
             </ol>
         </section>
         <section class="content">
@@ -16,18 +16,17 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">编辑图像</h3>
+                            <h3 class="box-title">图像上传</h3>
                         </div>
-                        <form role="form" th:action="@{/api/user/}" method="post" id="addForm" enctype="multipart/form-data" >
+                        <form role="form" method="post" enctype="multipart/form-data" >
                             <div class="box-body box-profile">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <img class="profile-user-img img-responsive img-circle" th:src="@{/static/AdminLTE-2.3.11/dist/img/user2-160x160.jpg}"/>
+                                        <label class="control-label">图像上传</label>
+                                        <input type="hidden" name="id" id="id" th:value="${sysUser.id}" />
+                                        <input id="icon" name="file" type="file" multiple="true" class="file-loading">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="box-footer">
-                                <button type="button" class="btn btn-primary pull-right" id="btn_add">保 存</button>
                             </div>
                         </form>
                     </div>
@@ -36,14 +35,11 @@
         </section>
     </div>
 
-    <!-- bootstrap datepicker -->
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/bootstrap-datepicker.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js}"></script>
-    <!-- jquery validation -->
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/jquery.validate.js}"></script>
-    <script th:src="@{/static/AdminLTE-2.3.11/plugins/jquery-validation/additional-methods.js}"></script>
+    <!-- bootstrap fileinput -->
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/fileinput/js/fileinput.min.js}"></script>
+    <script th:src="@{/static/AdminLTE-2.3.11/plugins/fileinput/js/locales/zh.js}"></script>
     <!-- layer -->
     <script th:src="@{/static/AdminLTE-2.3.11/plugins/layer/layer.js}"></script>
     <!-- 自定义JS-->
-    <script th:src="@{/static/system/user/user_add.js}"></script>
+    <script th:src="@{/static/system/user/user_icon.js}"></script>
 </html>

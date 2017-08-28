@@ -9,4 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysFileMapper extends CrudDao<SysFile> {
+    // 根据userId删除用户的文件信息
+    void deleteByUserId(String userId);
+
 }

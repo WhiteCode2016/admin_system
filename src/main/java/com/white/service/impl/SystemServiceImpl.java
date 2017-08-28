@@ -113,6 +113,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
+    @Transactional
     public void addUserIncludeFile(SysUser sysUser, MultipartFile file) {
         sysUser.preInsert();
         // 保存用户信息到用户表
@@ -137,6 +138,16 @@ public class SystemServiceImpl implements SystemService {
         sysUserMapper.update(sysUser);
         // 将userId、roleId插入用户--角色表）
         sysUserMapper.insertUserAndRole(userId, roleId);
+    }
+
+    @Override
+    public void updateUserAndRoleAndFile(SysUser sysUser, MultipartFile file) {
+        // 更新用户的信息
+        updateUserAndRole(sysUser);
+        String userId = sysUser.getId();
+        // 删除用户文件，插入新的文件
+        sysFileMapper.deleteByUserId(userId);
+        unifileUpload(file,userId);
     }
 
     @Override
@@ -247,6 +258,12 @@ public class SystemServiceImpl implements SystemService {
         sysFileMapper.deleteById(id);
     }
 
+    @Override
+    public void updateFile(String userId, MultipartFile file) {
+        sysFileMapper.deleteByUserId(userId);
+        unifileUpload(file,userId);
+    }
+
 
     //单文件上传
     public void unifileUpload(MultipartFile file, String userId) {
@@ -282,12 +299,12 @@ public class SystemServiceImpl implements SystemService {
 
                 // 文件上传到的路径
                 String filePath = SysConstants.UPLOAD_PATH;
-                File dest = new File(filePath + fileName);
+                File targetFile = new File(filePath,fileName);
                 // 检测是否存在目录
-                if (!dest.getParentFile().exists()) {
-                    dest.getParentFile().mkdirs();
+                if(!targetFile.exists()){
+                    targetFile.mkdirs();
                 }
-                file.transferTo(new File(filePath));
+                file.transferTo(targetFile);
                 // 保存到数据库操作
                 SysFile sysFile = new SysFile();
                 sysFile.preInsert();

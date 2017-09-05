@@ -83,8 +83,11 @@
             )
     </insert>
     <!-- 根据userId删除（用户-角色表）中的全部信息 -->
-    <delete id="deleteRoleByUserId">
+    <delete id="deleteByUserId">
         DELETE FROM sys_user_role WHERE user_id = #{userId}
     </delete>
-
+    <!-- 根据roleId删除（用户-角色表）中的信息 -->
+    <delete id="deleteByRoleId">
+        DELETE FROM sys_user_role WHERE role_id = #{roleId}
+    </delete>
 </mapper>

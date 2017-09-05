@@ -133,7 +133,7 @@ public class SystemServiceImpl implements SystemService {
         String userId = sysUser.getId();
         String roleId = sysUser.getRole().getId();
         // 根据userId删除（用户--角色表）中的全部信息
-        sysUserMapper.deleteRoleByUserId(userId);
+        sysUserMapper.deleteByUserId(userId);
         // 更新用户基本信息
         sysUserMapper.update(sysUser);
         // 将userId、roleId插入用户--角色表）
@@ -153,7 +153,7 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public void deleteUser(String id) {
         // 根据userId删除（用户--角色表）中的全部信息
-        sysUserMapper.deleteRoleByUserId(id);
+        sysUserMapper.deleteByUserId(id);
         // 删除用户表信息
         sysUserMapper.deleteById(id);
     }
@@ -231,6 +231,18 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public void addRole(SysRole sysRole) {
         sysRoleMapper.insert(sysRole);
+        // 默认为每个角色添加一个首页菜单
+        sysRoleMapper.insertRoleAndMenu(sysRole.getId(),"1");
+    }
+
+    @Override
+    public void addRoleAndMenu(String roleId, List<String> menuIds) {
+        // 清空该角色所拥有的菜单
+        sysRoleMapper.deleteByRoleId(roleId);
+        // 批量添加角色对应的菜单
+        for (String menuId : menuIds) {
+            sysRoleMapper.insertRoleAndMenu(roleId,menuId);
+        }
     }
 
     @Override
@@ -240,6 +252,11 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public void deleteRole(String id) {
+        // 清除角色-菜单表
+        sysRoleMapper.deleteByRoleId(id);
+        // 清除用户-角色表
+        sysUserMapper.deleteByRoleId(id);
+        // 清除角色表
         sysRoleMapper.deleteById(id);
     }
 

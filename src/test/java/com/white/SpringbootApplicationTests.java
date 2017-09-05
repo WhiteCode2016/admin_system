@@ -70,7 +70,7 @@ public class SpringbootApplicationTests {
 
 	@Test
 	public void findList2() {
-		sysUserMapper.deleteRoleByUserId("85c1feaff9b34e15aaf2970abf068c91");
+		sysUserMapper.deleteByUserId("85c1feaff9b34e15aaf2970abf068c91");
 	}
 
 	@Test

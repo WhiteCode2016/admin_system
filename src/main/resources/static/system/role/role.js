@@ -30,7 +30,7 @@ $(document).ready(function () {
                     if(data == 1){
                         data ="<span class='label label-primary'>显示</span>";
                     }else{
-                        data ="<span class='label label-primary'>不显示</span>";
+                        data ="<span class='label label-danger'>不显示</span>";
                     }
                     return	 data;
                 }
@@ -39,9 +39,10 @@ $(document).ready(function () {
             {
                 "data" : null,
                 "render":function(data, type, row, meta){
-                    return	data='<button class="btn btn-primary btn-xs" id="deleteOne" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="editOne"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="editMneuTree"  data-id='+ row.id +'><i class="fa fa-th-list"></i></button> ';
+                    return	data='<button class="btn btn-primary btn-xs" id="deleteOne" title="删除" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="editOne" title="编辑" data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="editMneuTree" title="编辑所拥有的菜单" data-id='+ row.id +'><i class="fa fa-th-list"></i></button> ' +
+                        '<button class="btn btn-primary btn-xs" id="detailOne" title="预览" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
                 }
             }
         ],
@@ -54,8 +55,8 @@ $(document).ready(function () {
         var topPlugin = '<div class="btn-group"> ' +
             '<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button> ' +
             '<ul class="dropdown-menu " role="menu"> ' +
-            '<li><a href="#" id="excel"> <img src="icons/xls.png" width="24px"> XLS</a></li> ' +
-            '<li><a href="#"> <img src="icons/pdf.png" width="24px"> PDF</a></li> ' +
+            '<li><a href="#" id="excel"> <img src="#" width="24px"> XLS</a></li> ' +
+            '<li><a href="#"><i class="fa fa-file-pdf-o"></i>PDF</a></li> ' +
             '</ul> ' +
             '</div>';
         //在表格上方topPlugin DIV中追加HTML
@@ -75,6 +76,19 @@ $(document).ready(function () {
     $(document).delegate('#editMneuTree','click',function() {
         var id=$(this).data("id");
         window.open("/api/menu/menuTree/" + id,"_self");
+    });
+    // 打开详情页面
+    $(document).delegate('#detailOne','click',function() {
+        var id = $(this).data("id");
+        var index = layer.open({
+            type: 2,
+            title: '角色详情',
+            shadeClose: false,
+            shade: 0.8,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['600px', '450px'],
+            content: '/api/role/detail/' + id
+        });
     });
     // 重置查询条件
     $(document).delegate('#reset','click',function() {

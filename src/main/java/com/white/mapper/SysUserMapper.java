@@ -17,5 +17,7 @@ public interface SysUserMapper extends CrudDao<SysUser> {
     // 将userId和roleId添加到表中，建立用户与角色的对应关系
     void insertUserAndRole(@Param("userId") String userId, @Param("roleId") String roleId);
     // 根据userId删除（用户--角色表）中的全部信息
-    void deleteRoleByUserId(@Param("userId") String userId);
+    void deleteByUserId(@Param("userId") String userId);
+    // 根据roleId删除（用户-角色表）中的信息
+    void deleteByRoleId(@Param("roleId") String roleId);
 }

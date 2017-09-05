@@ -42,7 +42,7 @@ $(document).ready(function () {
                 "render":function(data, type, row, meta){
                     return	data='<button class="btn btn-primary btn-xs" id="deleteOne" title="删除" data-id='+ row.id +'><i class="glyphicon glyphicon-trash"></i></button> ' +
                         '<button class="btn btn-primary btn-xs" id="editOne" title="编辑"  data-id='+ row.id +'><i class="glyphicon glyphicon-edit"></i></button> ' +
-                        '<button class="btn btn-primary btn-xs" id="detailOne" title="详情" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
+                        '<button class="btn btn-primary btn-xs" id="detailOne" title="预览" data-id='+ row.id +'><i class="glyphicon glyphicon-th"></i></button> ';
                 }
             }
         ],
@@ -66,7 +66,7 @@ $(document).ready(function () {
             shadeClose: false,
             shade: 0.8,
             maxmin: true, //开启最大化最小化按钮
-            area: ['600px', '380px'],
+            area: ['600px', '650px'],
             content: '/api/user/detail/' + id
         });
     });

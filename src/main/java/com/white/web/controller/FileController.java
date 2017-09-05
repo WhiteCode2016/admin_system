@@ -113,6 +113,11 @@ public class FileController {
     /**
      * View视图
      */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView enterListFile() {
+        return new ModelAndView("admin/file/file_list");
+    }
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView enterEditFile(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();

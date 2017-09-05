@@ -3,6 +3,7 @@ package com.white.mapper;
 import com.white.dao.CrudDao;
 import com.white.entity.system.SysRole;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,9 @@ public interface SysRoleMapper extends CrudDao<SysRole> {
     // 获取所有的菜单列表
     List<SysRole> getAllRoles();
 
+    // 通过roleId删除（角色-菜单表）中的信息
+    void deleteByRoleId(String roleId);
+
+    // 将roleId和menuId添加到表中，建立角色与菜单的对应关系
+    void insertRoleAndMenu(@Param("roleId") String roleId, @Param("menuId") String menuId);
 }

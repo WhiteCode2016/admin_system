@@ -68,5 +68,13 @@
     <select id="getAllRoles" resultType="com.white.entity.system.SysRole">
         <include refid="selectColumns"/>
     </select>
-
+    <!-- 通过roleId删除（角色-菜单表）中的信息 -->
+    <delete id="deleteByRoleId">
+        DELETE FROM sys_role_menu
+        WHERE role_id = #{roleId}
+    </delete>
+    <!-- 将roleId和menuId添加到表中，建立角色与菜单的对应关系 -->
+    <insert id="insertRoleAndMenu">
+        INSERT INTO sys_role_menu (role_id,menu_id) VALUES (#{roleId},#{menuId})
+    </insert>
 </mapper>

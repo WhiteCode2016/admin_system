@@ -44,7 +44,7 @@ $(document).ready(function () {
             shadeClose: false,
             shade: 0.8,
             maxmin: true, //开启最大化最小化按钮
-            area: ['600px', '380px'],
+            area: ['600px', '450px'],
             content: '/api/file/edit/' + id
         });
     });

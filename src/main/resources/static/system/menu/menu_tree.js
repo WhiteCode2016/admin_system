@@ -58,4 +58,27 @@ $(function () {
         });
         return ids;
     }
+
+    // 保存或编辑菜单树操作
+    $(document).delegate("#btn_add", 'click',function () {
+        alert(getCheckboxTreeSelNode("jsTree"));
+        $.ajax({
+            type : "GET",
+            url : "/api/role/123",
+            data:{
+                "menuIds": getCheckboxTreeSelNode("jsTree")
+            },
+            success: function(data){
+                if (data.code == 0) {
+                    layer.msg("添加成功", {icon: 1, time: 2000});
+                } else {
+                    layer.msg("添加失败", {icon: 2, time: 2000});
+                }
+            },
+            error:function(data){
+                layer.msg("请求异常", {icon: 5, time: 1500});
+            }
+
+        });
+    });
 });

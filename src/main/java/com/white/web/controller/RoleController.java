@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.util.List;
 
 @RestController
@@ -63,6 +64,13 @@ public class RoleController {
         return ResultUtil.success();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public JsonResult addAndupdateRoleMenuTree(@PathVariable String id, @RequestParam(value="menuIds[]") List<String> menuIds) {
+        logger.info("========= " + menuIds.toString());
+        systemService.addRoleAndMenu(id, menuIds);
+        return ResultUtil.success();
+    }
+
     /**
      * View视图
      */
@@ -85,6 +93,16 @@ public class RoleController {
     public ModelAndView enterAddRole() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/role/role_add");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public ModelAndView getUserDetail(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        // 获取角色的信息
+        SysRole sysRole = systemService.getRole(id);
+        modelAndView.addObject("sysRole",sysRole);
+        modelAndView.setViewName("admin/role/role_detail");
         return modelAndView;
     }
 }

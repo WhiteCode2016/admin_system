@@ -67,6 +67,8 @@ public interface SystemService {
     List<SysRole> getAllRoles();
     /** 添加角色 */
     void addRole(SysRole sysRole);
+    /** 添加角色对应的菜单 */
+    void addRoleAndMenu(String roleId, List<String> menuIds);
     /** 编辑角色 */
     void updateRole(SysRole sysRole);
     /** 删除角色 */

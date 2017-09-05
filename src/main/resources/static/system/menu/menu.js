@@ -72,7 +72,8 @@ $(document).ready(function () {
             title: '菜单详情',
             shadeClose: false,
             shade: 0.8,
-            area: ['830px', '450px'],
+            maxmin: true, //开启最大化最小化按钮
+            area: ['600px', '450px'],
             content: '/api/menu/detail/' + id
         });
     });
